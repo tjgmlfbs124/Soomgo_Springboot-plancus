@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Calendar</title>
+
+    <!-- Prevent the demo from appearing in search engines -->
+    <meta name="robots" content="noindex">
+
+    <!-- Perfect Scrollbar -->
+    <link type="text/css" href="/vendor/perfect-scrollbar.css" rel="stylesheet">
+
+    <!-- App CSS -->
+    <link type="text/css" href="/css/app.css" rel="stylesheet">
+    <link type="text/css" href="/css/app.rtl.css" rel="stylesheet">
+
+    <!-- Material Design Icons -->
+    <link type="text/css" href="/css/vendor-material-icons.css" rel="stylesheet">
+    <link type="text/css" href="/css/vendor-material-icons.rtl.css" rel="stylesheet">
+
+    <!-- Font Awesome FREE Icons -->
+    <link type="text/css" href="/css/vendor-fontawesome-free.css" rel="stylesheet">
+    <link type="text/css" href="/css/vendor-fontawesome-free.rtl.css" rel="stylesheet">
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133433427-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-133433427-1');
+    </script>
+
+
+
+    <!-- FullCalendar -->
+    <link type="text/css" href="/vendor/fullcalendar/fullcalendar.min.css" rel="stylesheet">
+
+
+</head>
+
+<body class="layout-default">
+<div class="preloader"></div>
+<!-- Header Layout -->
+<div class="mdk-header-layout js-mdk-header-layout">
+    <!-- Header -->
+    <div id="header" class="mdk-header js-mdk-header m-0" data-fixed>
+        <div class="mdk-header__content">
+
+            <div class="navbar navbar-expand-sm navbar-main navbar-light bg-white pr-0" id="navbar" data-primary>
+                <div class="container-fluid p-0">
+                    <!-- Navbar toggler -->
+                    <button class="navbar-toggler navbar-toggler-right d-block d-lg-none" type="button" data-toggle="sidebar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <!-- Navbar Brand -->
+                    <a href="index.html" class="navbar-brand ">
+
+                        <span style="color:#5377B3">mileStone</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- // END Header -->
+
+    <!-- Header Layout Content -->
+    <div class="mdk-header-layout__content">
+
+        <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+            <div class="mdk-drawer-layout__content page">
+                <div class="container-fluid page__heading-container">
+                    <div class="page__heading d-flex align-items-center" style="margin-bottom:20px;">
+                        <div class="flex">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item"><a href="/"><i class="material-icons icon-20pt">home</i></a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Calendar</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <a href="/plan/newPlan" class="btn ml-3" style="background-color:#5478B5; color:#fff;">New Event</a>
+                    </div>
+                </div>
+
+                <div class="container-fluid page__container">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="card card-body" style="padding:0px; border:none;">
+                                <div id="calendar" data-toggle="fullcalendar" style="background-color:#FAFBFE;"></div>
+                            </div>
+                        </div> <!-- end col -->
+
+                        <div class="col-lg-3">
+                            <div id="external-events">
+                                <p class="text-muted">오늘의 일정</p>
+                                <div class="external-event bg-success" data-class="bg-success" style="position:relative;">
+                                    <i class="mr-2 material-icons" style="line-height:1.25;">drag_handle</i>
+                                    <span class="external-event__title" style="line-height:2;">앱디자인</span>
+                                    <span class="external-event__title" style="line-height:2; position:absolute; right:8px;">11:00 ~ 13:00</span>
+                                </div>
+                                <div class="external-event bg-warning" data-class="bg-warning" style="position:relative;">
+                                    <i class="mr-2 material-icons" style="line-height:1.25;">drag_handle</i>
+                                    <span class="external-event__title" style="line-height:2;">마일스톤 CI 리디자인</span>
+                                    <span class="external-event__title" style="line-height:2; position:absolute; right:8px;">07:30 ~ 11:00</span>
+                                </div>
+                            </div>
+                        </div> <!-- end col-->
+                    </div> <!-- end row -->
+                </div>
+
+
+
+            </div>
+            <!-- // END drawer-layout__content -->
+
+            <div class="mdk-drawer js-mdk-drawer" id="default-drawer" data-align="start">
+                <div class="mdk-drawer__content">
+                    <div class="sidebar sidebar-light sidebar-left sidebar-p-t" data-perfect-scrollbar>
+                        <div class="sidebar-heading">Menu</div>
+                        <ul class="sidebar-menu">
+                            <li class="sidebar-menu-item">
+                                <a class="sidebar-menu-button" data-toggle="collapse" href="#dashboards_menu">
+                                    <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">dvr</i>
+                                    <span class="sidebar-menu-text">Dashboards</span>
+                                    <span class="ml-auto sidebar-menu-toggle-icon"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- // END drawer-layout -->
+
+    </div>
+    <!-- // END header-layout__content -->
+
+</div>
+
+<!-- jQuery -->
+<script src="/vendor/jquery.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="/vendor/popper.min.js"></script>
+<script src="/vendor/bootstrap.min.js"></script>
+
+<!-- Perfect Scrollbar -->
+<script src="/vendor/perfect-scrollbar.min.js"></script>
+
+<!-- DOM Factory -->
+<script src="/vendor/dom-factory.js"></script>
+
+<!-- MDK -->
+<script src="/vendor/material-design-kit.js"></script>
+
+<!-- App -->
+<script src="/js/toggle-check-all.js"></script>
+<script src="/js/check-selected-row.js"></script>
+<script src="/js/dropdown.js"></script>
+<script src="/js/sidebar-mini.js"></script>
+<script src="/js/app.js"></script>
+<script src="/dev/calender.js"></script>
+
+
+
+<!-- Add New Event MODAL -->
+<div class="modal fade" id="event-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pr-4 pl-4 border-bottom-0 d-block">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add New Event</h4>
+            </div>
+            <div class="modal-body pt-3 pr-4 pl-4">
+            </div>
+            <div class="text-right pb-4 pr-4">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success save-event">Create event</button>
+                <button type="button" class="btn btn-danger delete-event" data-dismiss="modal">Delete</button>
+            </div>
+        </div> <!-- end modal-content-->
+    </div> <!-- end modal dialog-->
+</div>
+<!-- end modal-->
+
+<!-- Modal Add Category -->
+<div class="modal fade" id="add-category" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0 d-block">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add a category</h4>
+            </div>
+            <div class="modal-body p-4">
+                <form>
+                    <div class="form-group">
+                        <label class="control-label">Category Name</label>
+                        <input class="form-control form-white" placeholder="Enter name" type="text" name="category-name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Choose Category Color</label>
+                        <select class="form-control form-white" data-placeholder="Choose a color..." name="category-color">
+                            <option value="primary">Primary</option>
+                            <option value="success">Success</option>
+                            <option value="danger">Danger</option>
+                            <option value="info">Info</option>
+                            <option value="warning">Warning</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+
+                </form>
+
+                <div class="text-right">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary ml-1 save-category" data-dismiss="modal">Save</button>
+                </div>
+
+            </div> <!-- end modal-body-->
+        </div> <!-- end modal-content-->
+    </div> <!-- end modal dialog-->
+</div>
+<!-- end modal-->
+
+<!-- jQuery UI (for draggable) -->
+<script src="/vendor/jquery-ui.min.js"></script>
+
+<!-- Moment.js -->
+<script src="/vendor/moment.min.js"></script>
+
+<!-- FullCalendar -->
+<script src="/vendor/fullcalendar/fullcalendar.min.js"></script>
+<script src="/vendor/fullcalendar/ko.js"></script>
+<script>
+  const mc = new MyCalender();
+  var today = new Date();
+  var date = (today.getDate(), today.getMonth(), today.getFullYear(), new Date($.now()));
+
+  console.log("new Date($.now() + 158e6) : ", new Date($.now() + 158e6))
+
+  mc.events = [{
+    title: "Hey!",
+    start: new Date("2021-04-29 11:11:11"),
+    plan : 123123,
+    className: "bg-warning"
+  }, {
+    title: "See John Deo",
+    start: date,
+    id : 123123,
+    className: "bg-success"
+  }, {
+    title: "Meet John Deo",
+    start: new Date($.now() + 168e6),
+    className: "bg-info"
+  }, {
+    title: "Buy a Theme",
+    start: new Date($.now() + 338e6),
+    className: "bg-primary"
+  }];
+
+  mc.setOption('#calendar', 'month', function(event, jsEvent, view, calendar) {
+    console.log("ev")
+    console.log("date : " , new Date(event.start._d).yyyymmdd());
+    location.href="/calender/weekly";
+
+  });
+
+  Date.prototype.yyyymmdd = function() {
+  var mm = this.getMonth() + 1; // getMonth() is zero-based
+  var dd = this.getDate();
+
+  return [this.getFullYear(),
+          (mm>9 ? '' : '0') + mm,
+          (dd>9 ? '' : '0') + dd
+         ].join('');
+  };
+
+
+</script>
+
+</body>
+
+</html>
