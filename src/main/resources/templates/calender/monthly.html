@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ko" xmlns:th='http://www.thymeleaf.org' dir="ltr">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' >
     <title>Calendar</title>
 
     <!-- Prevent the demo from appearing in search engines -->
@@ -24,74 +24,33 @@
     <!-- Font Awesome FREE Icons -->
     <link type="text/css" href="/css/vendor-fontawesome-free.css" rel="stylesheet">
     <link type="text/css" href="/css/vendor-fontawesome-free.rtl.css" rel="stylesheet">
-
+    <link type="text/css" href="/dev/font.css" rel="stylesheet">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133433427-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-
         function gtag() {
             dataLayer.push(arguments);
         }
         gtag('js', new Date());
-
         gtag('config', 'UA-133433427-1');
     </script>
-
-
-
     <!-- FullCalendar -->
     <link type="text/css" href="/vendor/fullcalendar/fullcalendar.min.css" rel="stylesheet">
-
-
 </head>
 
 <body class="layout-default">
 <div class="preloader"></div>
 <!-- Header Layout -->
 <div class="mdk-header-layout js-mdk-header-layout">
-    <!-- Header -->
-    <div id="header" class="mdk-header js-mdk-header m-0" data-fixed>
-        <div class="mdk-header__content">
-
-            <div class="navbar navbar-expand-sm navbar-main navbar-light bg-white pr-0" id="navbar" data-primary>
-                <div class="container-fluid p-0">
-                    <!-- Navbar toggler -->
-                    <button class="navbar-toggler navbar-toggler-right d-block d-lg-none" type="button" data-toggle="sidebar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <!-- Navbar Brand -->
-                    <a href="index.html" class="navbar-brand ">
-
-                        <span style="color:#5377B3">mileStone</span>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- // END Header -->
-
+  <div th:replace="widget/header"></div>
     <!-- Header Layout Content -->
     <div class="mdk-header-layout__content">
 
         <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
             <div class="mdk-drawer-layout__content page">
-                <div class="container-fluid page__heading-container">
-                    <div class="page__heading d-flex align-items-center" style="margin-bottom:20px;">
-                        <div class="flex">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb mb-0">
-                                    <li class="breadcrumb-item"><a href="/"><i class="material-icons icon-20pt">home</i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Calendar</li>
-                                </ol>
-                            </nav>
-                        </div>
-                        <a href="/plan/newPlan" class="btn ml-3" style="background-color:#5478B5; color:#fff;">New Event</a>
-                    </div>
-                </div>
-
+                <div th:replace="calender/header"></div>
                 <div class="container-fluid page__container">
                     <div class="row">
                         <div class="col-lg-9">
@@ -102,7 +61,9 @@
 
                         <div class="col-lg-3">
                             <div id="external-events">
-                                <p class="text-muted">오늘의 일정</p>
+                                <p class="text-muted" style="font-family:'noto_bold';">오늘의 일정
+                                  <span style="float:right;"> <i data-v-da9425c4="" class="material-icons icon-10pt" style="cursor:pointer;">mode_edit</i> </span>
+                                </p>
                                 <div class="external-event bg-success" data-class="bg-success" style="position:relative;">
                                     <i class="mr-2 material-icons" style="line-height:1.25;">drag_handle</i>
                                     <span class="external-event__title" style="line-height:2;">앱디자인</span>
@@ -117,9 +78,6 @@
                         </div> <!-- end col-->
                     </div> <!-- end row -->
                 </div>
-
-
-
             </div>
             <!-- // END drawer-layout__content -->
 

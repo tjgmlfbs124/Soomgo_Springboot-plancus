@@ -1,0 +1,99 @@
+
+<div id="modal-date" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-date-title" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="modal-date-title"> 날짜 선택</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <!-- // END .modal-header -->
+         <div class="modal-body">
+            <div class="card">
+               <div class="card-body">
+                  <label class="text-label" for="flatpickrSample01">Date</label>
+                  <input id="flatpickrSample01" type="text" class="form-control" placeholder="Flatpickr example" data-toggle="flatpickr" value="today">
+               </div>
+            </div>
+         </div>
+         <!-- // END .modal-body -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+         </div>
+         <!-- // END .modal-footer -->
+      </div>
+      <!-- // END .modal-content -->
+   </div>
+   <!-- // END .modal-dialog -->
+</div>
+<!-- // END .modal -->
+<div id="modal-time" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-time-title" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+   <div class="modal-content">
+      <div class="modal-header">
+         <h5 class="modal-title" id="modal-time-title">시간 선택</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+      <!-- // END .modal-header -->
+      <div class="modal-body">
+         <div class="container-fluid page__container" style="padding:0px;">
+            <div class="form-group" style="margin-bottom:10px;">
+               <label class="text-label" for="password_2">선택날짜</label>
+               <div class="input-group input-group-merge">
+                  <input id="name_12" type="text" required="" class="form-control form-control" placeholder="제목" name="member_id" style="margin-right:10px; flex:2 1 0%;">
+                  <div class="flex mt-10" >
+                     <div class="custom-control custom-checkbox-toggle custom-control-inline mr-1" style="float:right; margin-top:5px">
+                        <input checked="false" type="checkbox" id="subscribe" class="custom-control-input">
+                        <label class="custom-control-label" for="subscribe"></label>
+                     </div>
+                     <label for="subscribe" style="float:right; margin:7px 3px 0px 0px">종일</label>
+                  </div>
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="text-label" for="password_2">시간</label>
+               <div class="input-group input-group-merge">
+                  <input id="flatpickrSample05" type="text" class="form-control" placeholder="Flatpickr time example" data-toggle="flatpickr" data-flatpickr-enable-time="true" data-flatpickr-no-calendar="true" data-flatpickr-alt-format="H:i" data-flatpickr-date-format="H:i" value="15:35" >
+                  <span style="margin:10px;"> ~ </span>
+                  <input id="flatpickrSample06" type="text" class="form-control" placeholder="Flatpickr time example" data-toggle="flatpickr" data-flatpickr-enable-time="true" data-flatpickr-no-calendar="true" data-flatpickr-alt-format="H:i" data-flatpickr-date-format="H:i" value="15:35" >
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- // END .modal-body -->
+      <div class="modal-footer">
+         <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+      </div>
+      <!-- // END .modal-footer -->
+   </div>
+   <!-- // END .modal-content -->
+</div>
+</div>
+<!-- // END .modal-dialog -->
+
+
+<div id="modal-confirm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-confirm-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-center-title">plancus</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div> <!-- // END .modal-header -->
+            <div class="modal-body">
+                <p>2021년 4월 30일 15:30</p>
+                <p>확정하시겠습니까?</p>
+            </div> <!-- // END .modal-body -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="location.href='/calender/monthly'">Save changes</button>
+            </div> <!-- // END .modal-footer -->
+        </div> <!-- // END .modal-content -->
+    </div> <!-- // END .modal-dialog -->
+</div> <!-- // END .modal -->

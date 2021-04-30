@@ -10,10 +10,9 @@ import java.util.Locale;
 @Controller
 public class PlanController {
 
-    @GetMapping("/plan/{action}")
-    public String onSavePlan(@PathVariable("action") String action){
-        action = action.toUpperCase(Locale.ROOT);
+    @GetMapping("/plan/new")
+    public String onPageSavePlan(){
 
-        return "/plan/" + action;
+        return "/plan/new";
     }
 }

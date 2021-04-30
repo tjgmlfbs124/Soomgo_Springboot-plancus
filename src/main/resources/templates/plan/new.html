@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th='http://www.thymeleaf.org' dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' >
+    <title>Calendar</title>
+    <!-- Prevent the demo from appearing in search engines -->
+    <meta name="robots" content="noindex">
+
+    <link type="text/css" href="/dev/font.css" rel="stylesheet">
+
+    <style>
+      .text-label, .modal-title{
+        font-family: 'noto_bold';
+      }
+
+      .js-lists-values-employee-name, .modal-body{
+        font-family: 'noto_demilight';
+        color:#303030;
+
+      }
+      .mdk-header-layout__content {
+        padding-top: 56px;
+      }
+    </style>
+
+    <!-- Perfect Scrollbar -->
+    <link type="text/css" href="/vendor/perfect-scrollbar.css" rel="stylesheet">
+    <!-- App CSS -->
+    <link type="text/css" href="/css/app.css" rel="stylesheet">
+    <link type="text/css" href="/css/app.rtl.css" rel="stylesheet">
+    <!-- Material Design Icons -->
+    <link type="text/css" href="/css/vendor-material-icons.css" rel="stylesheet">
+    <link type="text/css" href="/css/vendor-material-icons.rtl.css" rel="stylesheet">
+    <!-- Font Awesome FREE Icons -->
+    <link type="text/css" href="/css/vendor-fontawesome-free.css" rel="stylesheet">
+    <link type="text/css" href="/css/vendor-fontawesome-free.rtl.css" rel="stylesheet">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133433427-1"></script>
+    <!-- Flatpickr -->
+    <link type="text/css" href="/css/vendor-flatpickr.css" rel="stylesheet">
+    <link type="text/css" href="/css/vendor-flatpickr.rtl.css" rel="stylesheet">
+    <link type="text/css" href="/css/vendor-flatpickr-airbnb.css" rel="stylesheet">
+    <link type="text/css" href="/css/vendor-flatpickr-airbnb.rtl.css" rel="stylesheet">
+    <script>
+         window.dataLayer = window.dataLayer || [];
+
+         function gtag() {
+             dataLayer.push(arguments);
+         }
+         gtag('js', new Date());
+
+         gtag('config', 'UA-133433427-1');
+      </script>
+    <!-- FullCalendar -->
+    <link type="text/css" href="/vendor/fullcalendar/fullcalendar.min.css" rel="stylesheet">
+</head>
+<body class="layout-default">
+  <div class="preloader"></div>
+  <!-- Header Layout -->
+  <div class="mdk-header-layout js-mdk-header-layout">
+    <div th:replace="widget/header"></div>
+     <div th:replace="plan/plan"></div>
+     <div th:replace="plan/filter"></div>
+     <div th:replace="plan/ai"></div>
+
+
+   </div>
+   <div th:replace="widget/nav"></div>
+   <div th:replace="plan/modal"></div>
+
+<!-- jQuery -->
+<script src="/vendor/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/vendor/popper.min.js"></script>
+<script src="/vendor/bootstrap.min.js"></script>
+<!-- Perfect Scrollbar -->
+<script src="/vendor/perfect-scrollbar.min.js"></script>
+<!-- DOM Factory -->
+<script src="/vendor/dom-factory.js"></script>
+<!-- MDK -->
+<script src="/vendor/material-design-kit.js"></script>
+<!-- App -->
+<script src="/js/toggle-check-all.js"></script>
+<script src="/js/check-selected-row.js"></script>
+<script src="/js/dropdown.js"></script>
+<script src="/js/sidebar-mini.js"></script>
+<script src="/js/app.js"></script>
+<script src="/dev/calender.js"></script>
+<!-- jQuery UI (for draggable) -->
+<script src="/vendor/jquery-ui.min.js"></script>
+<!-- Moment.js -->
+<script src="/vendor/moment.min.js"></script>
+
+<!-- Flatpickr -->
+<script src="/vendor/flatpickr/flatpickr.min.js"></script>
+<script src="/js/flatpickr.js"></script>
+<script>
+  $("#newFilterDocument").hide();
+  $("#newAiDocument").hide();
+  function onPage(pg){
+    switch (pg) {
+      case 'plan' :
+        $("#newPlanDocument").show();
+        $("#newFilterDocument").hide();
+        $("#newAiDocument").hide();
+        break;
+      case 'filter':
+        $("#newPlanDocument").hide();
+        $("#newFilterDocument").show();
+        $("#newAiDocument").hide();
+        break;
+      case 'ai':
+        $("#newPlanDocument").hide();
+        $("#newFilterDocument").hide();
+        $("#newAiDocument").show();
+        break;
+      default:
+
+    }
+  }
+</script>
+
+</body>
+</html>

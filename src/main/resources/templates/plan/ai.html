@@ -1,0 +1,178 @@
+<div class="mdk-header-layout__content" id="newAiDocument">
+    <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+        <div class="mdk-drawer-layout__content page">
+            <div class="container-fluid page__heading-container">
+                <div class="page__heading d-flex align-items-center" style="margin-bottom:20px;">
+                    <div class="flex">
+                        <nav aria-label="breadcrumb" style="float:left">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="/"><i class="material-icons icon-20pt">home</i></a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Calendar</li>
+                                <li class="breadcrumb-item active" aria-current="page">New</li>
+                                <li class="breadcrumb-item active" aria-current="page">Save</li>
+                            </ol>
+                        </nav>
+                        <h4 class="m-0" style="float:right; font-family: 'noto_bold';">AI 일정 추천</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid page__container">
+                <div class="form-group" style="margin-bottom:2rem;">
+                    <label class="text-label" >현재 일정 기반 최적화된 순위</label>
+                    <div class="card card-form" style="border:none">
+                        <div class="row no-gutters">
+                            <div class="col-lg-12 card-form__body">
+                                <div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                                    <table class="table mb-0 thead-border-top-0">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 5px;" class="text-left">순위</th>
+                                            <th style="width: 38px;" class="text-left">날짜</th>
+                                            <th style="width: 5px;" class="text-right">선택</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list" id="times">
+                                            <tr>
+                                                <td>
+                                                    <div class="media align-items-left">
+                                                        <div class="media-body">
+                                                            <span class="js-lists-values-employee-name" >1</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="media align-items-left">
+                                                        <div class="media-body">
+                                                            <span class="js-lists-values-employee-name">09:00 ~ 12:00</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox" style="float:right;">
+                                                        <input type="checkbox" class="custom-control-input js-check-selected-row" id="customCheck1" style="border:1px">
+                                                        <label class="custom-control-label" for="customCheck1"><span class="text-hide">Check</span></label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="media align-items-left">
+                                                        <div class="media-body">
+                                                            <span class="js-lists-values-employee-name" >2</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="media align-items-left">
+                                                        <div class="media-body">
+                                                            <span class="js-lists-values-employee-name" >13:00 ~ 18:00</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox" style="float:right;">
+                                                        <input type="checkbox" class="custom-control-input js-check-selected-row" id="customCheck2" style="border:1px">
+                                                        <label class="custom-control-label" for="customCheck2"><span class="text-hide">Check</span></label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="media align-items-left">
+                                                        <div class="media-body">
+                                                            <span class="js-lists-values-employee-name" >3</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="media align-items-left">
+                                                        <div class="media-body">
+                                                            <span class="js-lists-values-employee-name" >18:00 ~ 20:00</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox" style="float:right;">
+                                                        <input type="checkbox" class="custom-control-input js-check-selected-row" id="customCheck3" style="border:1px">
+                                                        <label class="custom-control-label" for="customCheck3"><span class="text-hide">Check</span></label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom:6rem;">
+                    <label class="text-label" >일정 충돌 여부</label>
+                    <div class="card card-form" style="border:none">
+                        <div class="row no-gutters">
+                            <div class="col-lg-12 card-form__body">
+                                <div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                                    <table class="table mb-0 thead-border-top-0">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 38px;" class="text-left">날짜</th>
+                                            <th style="width: 5px;" class="text-center">충돌자</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list" id="times">
+                                        <tr>
+                                            <td>
+                                                <div class="media align-items-left">
+                                                    <div class="media-body">
+                                                        <span class="js-lists-values-employee-name">09:00 ~ 12:00</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="media align-items-center" style="float:left;">
+                                                    <img src="/images/avatar/green.svg" class="mr-2" alt="avatar" />
+                                                </div>
+                                                <div class="media align-items-center" style="float:left;">
+                                                    <img src="/images/avatar/blue.svg" class="mr-2" alt="avatar" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="media align-items-left">
+                                                    <div class="media-body">
+                                                        <span class="js-lists-values-employee-name" >13:00 ~ 18:00</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="media align-items-left">
+                                                    <div class="media-body">
+                                                        <span class="js-lists-values-employee-name" >18:00 ~ 20:00</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="media align-items-center" style="float:left;">
+                                                    <img src="/images/avatar/blue.svg" class="mr-2" alt="avatar" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group text-center">
+                    <button class="btn btn-primary mb-2" style="width:100%;" data-toggle="modal" data-target="#modal-confirm">일정 추가</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
 
     @GetMapping("/signup")
-    public String signin(){
+    public String signup(){
         return "member/signup";
     }
 

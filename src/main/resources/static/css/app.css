@@ -13288,7 +13288,6 @@ html,
 [dir=ltr] .custom-control-label::before {
   box-shadow: none;
   background-color: white;
-  border: 1px solid #EFEFEF;
 }
 
 [dir=ltr] .custom-control-input:checked ~ .custom-control-label::before {
@@ -15680,6 +15679,7 @@ html,
   display: flex;
   border-radius: 0.25rem;
   cursor: move;
+  font-family:'noto_demilight';
 }
 
 [dir=ltr] .preloader {

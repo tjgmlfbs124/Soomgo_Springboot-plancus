@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ko" xmlns:th='http://www.thymeleaf.org' dir="ltr">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' >
     <title>plancus - signup</title>
 
     <!-- Prevent the demo from appearing in search engines -->
@@ -51,45 +51,25 @@
     <div class="form-group">
         <label class="text-label" for="name_2">ID:</label>
         <div class="input-group input-group-merge">
-            <input id="name_2" type="text" required="" class="form-control form-control-prepended" placeholder="Enter your Id" name="member_id">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <span class="far fa-user"></span>
-                </div>
-            </div>
+            <input id="name_2" type="text" required="" class="form-control" placeholder="Enter your Id" name="member_id">
         </div>
     </div>
     <div class="form-group">
         <label class="text-label" for="email_2">Password: (최소 8자)</label>
         <div class="input-group input-group-merge">
-            <input id="email_2" type="password" required="" class="form-control form-control-prepended" placeholder="Enter your password" name="member_pw">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <span class="far fa-envelope"></span>
-                </div>
-            </div>
+            <input id="email_2" type="password" required="" class="form-control" placeholder="Enter your password" name="member_pw">
         </div>
     </div>
     <div class="form-group">
         <label class="text-label" for="password_2">Name:</label>
         <div class="input-group input-group-merge">
-            <input id="password_2" type="text" required="" class="form-control form-control-prepended" placeholder="Enter your Name" name="member_name">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <span class="far fa-key"></span>
-                </div>
-            </div>
+            <input id="password_2" type="text" required="" class="form-control" placeholder="Enter your Name" name="member_name">
         </div>
     </div>
     <div class="form-group" style="margin-bottom:6rem;">
         <label class="text-label" for="password_2">Role: (ex. 인턴, 사원 ..)</label>
         <div class="input-group input-group-merge">
-            <input type="text" required="" class="form-control form-control-prepended" placeholder="Enter your Role" name="member_role">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <span class="far fa-key"></span>
-                </div>
-            </div>
+            <input type="text" required="" class="form-control" placeholder="Enter your Role" name="member_role">
         </div>
     </div>
     <div class="form-group text-center">

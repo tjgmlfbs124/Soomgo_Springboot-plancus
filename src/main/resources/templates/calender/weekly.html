@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ko" xmlns:th='http://www.thymeleaf.org' dir="ltr">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' >
     <title>Calendar</title>
 
     <!-- Prevent the demo from appearing in search engines -->
@@ -24,6 +24,7 @@
     <!-- Font Awesome FREE Icons -->
     <link type="text/css" href="/css/vendor-fontawesome-free.css" rel="stylesheet">
     <link type="text/css" href="/css/vendor-fontawesome-free.rtl.css" rel="stylesheet">
+    <link type="text/css" href="/dev/font.css" rel="stylesheet">
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -51,51 +52,11 @@
 <div class="preloader"></div>
 <!-- Header Layout -->
 <div class="mdk-header-layout js-mdk-header-layout">
-    <!-- Header -->
-    <div id="header" class="mdk-header js-mdk-header m-0" data-fixed>
-        <div class="mdk-header__content">
-
-            <div class="navbar navbar-expand-sm navbar-main navbar-dark bg-dark  pr-0" id="navbar" data-primary>
-                <div class="container-fluid p-0">
-                    <!-- Navbar toggler -->
-                    <button class="navbar-toggler navbar-toggler-right d-block d-md-none" type="button" data-toggle="sidebar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <!-- Navbar Brand -->
-                    <a href="/" class="navbar-brand ">
-
-                        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor" style="width:20px;" viewBox="0 0 40 40">
-                            <path d="M40 34.16666667c.01-3.21166667-2.58333333-5.82333334-5.795-5.835-1.94-.00666667-3.75666667.955-4.84166667 2.565-.10166666.155-.295.22333333-.47166666.16666666L11.94 25.66666667c-.19-.06-.31-.245-.28833333-.44333334.01-.07333333.015-.14833333.015-.22333333 0-.06833333-.005-.13833333-.01333334-.20666667-.02166666-.20166666.105-.39.3-.44666666l17.96-5.13c.13833334-.04.28666667-.005.39333334.09166666 1.05.97333334 2.42833333 1.51666667 3.86 1.525C37.38833333 20.83333333 40 18.22166667 40 15s-2.61166667-5.83333333-5.83333333-5.83333333C32.52 9.17166667 30.95333333 9.87833333 29.86 11.11c-.11.12166667-.28.16833333-.43666667.11833333L11.91 5.65333333c-.16-.05-.27333333-.19166666-.28833333-.35833333-.30333334-3.20166667-3.14333334-5.55166667-6.345-5.24833333S-.275 3.19.02833333 6.39166667c.28166667 2.99333333 2.79833334 5.28 5.805 5.275 1.64666667-.005 3.21333334-.71333334 4.30666667-1.945.11-.12166667.28-.16833334.43666667-.11833334l16.57 5.27166667c.22.06833333.34166666.30333333.27166666.52333333-.04166666.13333334-.14833333.23833334-.28333333.275L9.90333333 20.59666667c-.13333333.03833333-.275.00833333-.38166666-.08-1.03333334-.86833334-2.33833334-1.34666667-3.68833334-1.35C2.61166667 19.16666667 0 21.77833333 0 25s2.61166667 5.83333333 5.83333333 5.83333333c1.355-.005 2.665-.485 3.7-1.35833333.10833334-.09166667.25833334-.12.39333334-.07666667l18.29 5.81833334c.14.04333333.24666666.15666666.28.3.75666666 3.13166666 3.90833333 5.05666666 7.04 4.3C38.14833333 39.185 39.99 36.85333333 40 34.16666667z" />
-                        </svg>
-
-                        <span>mileStone</span>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- // END Header -->
-
-    <!-- Header Layout Content -->
+  <div th:replace="widget/header"></div>
     <div class="mdk-header-layout__content">
-
         <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
             <div class="mdk-drawer-layout__content page">
-                <div class="container-fluid page__heading-container">
-                    <div class="page__heading d-flex align-items-center" style="margin-bottom:20px;">
-                        <div class="flex">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb mb-0">
-                                    <li class="breadcrumb-item"><a href="/"><i class="material-icons icon-20pt">home</i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Calendar</li>
-                                </ol>
-                            </nav>
-                        </div>
-                        <a href="/plan/newPlan" class="btn btn-success ml-3">New Event</a>
-                    </div>
-                </div>
-
+                <div th:replace="calender/header"></div>
                 <div class="container-fluid page__container">
                     <div class="row">
                         <div class="col-lg-9">
@@ -106,10 +67,10 @@
 
                         <div class="col-lg-3">
                             <div id="external-events">
-                                <p class="text-muted">오늘의 일정</p>
+                                <p class="text-muted" style="font-family:'noto_bold';">오늘의 일정</p>
                                 <div class="external-event bg-success" data-class="bg-success" style="position:relative;">
                                     <i class="mr-2 material-icons" style="line-height:1.25;">drag_handle</i>
-                                    <span class="external-event__title" style="line-height:2;">앱디자인</span>
+                                    <span class="external-event__title" style="line-height:2;">앱 디자인</span>
                                     <span class="external-event__title" style="line-height:2; position:absolute; right:8px;">11:00 ~ 13:00</span>
                                 </div>
                                 <div class="external-event bg-warning" data-class="bg-warning" style="position:relative;">
@@ -148,18 +109,6 @@
 
 </div>
 <!-- // END header-layout -->
-<!-- App Settings FAB -->
-<div id="app-settings">
-    <app-settings layout-active="default" :layout-location="{
-  'default': 'app-fullcalendar.html',
-  'fixed': 'fixed-app-fullcalendar.html',
-  'fluid': 'fluid-app-fullcalendar.html',
-  'mini': 'mini-app-fullcalendar.html'
-}"></app-settings>
-</div>
-<!-- App Settings (safe to remove) -->
-<script src="/js/app-settings.js"></script>
-
 <!-- jQuery -->
 <script src="/vendor/jquery.min.js"></script>
 
@@ -183,8 +132,6 @@
 <script src="/js/sidebar-mini.js"></script>
 <script src="/js/app.js"></script>
 <script src="/dev/calender.js"></script>
-<!-- App Settings (safe to remove) -->
-<script src="/js/app-settings.js"></script>
 
 
 <!-- Add New Event MODAL -->

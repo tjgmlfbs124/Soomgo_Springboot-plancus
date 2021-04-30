@@ -1,0 +1,48 @@
+@font-face{
+    font-family: "noto_black";
+    src:url("/fonts/NotoSansKR/NotoSansCJKkr-Black.otf");
+    font-style:normal; /* 선택 */
+    font-weight:normal; /* 선택 */
+
+}
+
+@font-face{
+    font-family: "noto_bold";
+    src:url("/fonts/NotoSansKR/NotoSansCJKkr-Bold.otf");
+    font-style:normal; /* 선택 */
+    font-weight:normal; /* 선택 */
+}
+
+@font-face{
+    font-family: "noto_demilight";
+    src:url("/fonts/NotoSansKR/NotoSansCJKkr-DemiLight.otf");
+    font-style:normal; /* 선택 */
+    font-weight:normal; /* 선택 */
+}
+
+@font-face{
+    font-family: "noto_light";
+    src:url("/fonts/NotoSansKR/NotoSansCJKkr-Light.otf");
+    font-style:normal; /* 선택 */
+    font-weight:normal; /* 선택 */
+}
+
+@font-face{
+    font-family: "noto_medium";
+    src:url("/fonts/NotoSansKR/NotoSansCJKkr-Medium.otf");
+
+}
+
+@font-face{
+    font-family: "noto_regular";
+    src:url("fonts/NotoSansKR/NotoSansCJKkr-Regular.otf");
+    font-style:normal; /* 선택 */
+    font-weight:normal; /* 선택 */
+}
+
+@font-face{
+    font-family: "noto_thin";
+    src:url("fonts/NotoSansKR/NotoSansCJKkr-Thin.otf");
+    font-style:normal; /* 선택 */
+    font-weight:normal; /* 선택 */
+}

@@ -1,0 +1,105 @@
+<div class="mdk-header-layout__content" id="newPlanDocument">
+   <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+      <div class="mdk-drawer-layout__content page">
+         <div class="container-fluid page__heading-container">
+            <div class="page__heading d-flex align-items-center" style="margin-bottom:20px;">
+               <div class="flex">
+                  <nav aria-label="breadcrumb" style="float:left">
+                     <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="/"><i class="material-icons icon-20pt">home</i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Calendar</li>
+                        <li class="breadcrumb-item active" aria-current="page">New</li>
+                        <li class="breadcrumb-item active" aria-current="page">Plan</li>
+                     </ol>
+                  </nav>
+                  <h4 class="m-0" style="float:right; font-family: 'noto_bold';">일정추가</h4>
+               </div>
+            </div>
+         </div>
+         <div class="container-fluid page__container">
+            <div class="form-group">
+               <div class="input-group input-group-merge" style="font-family: 'noto_demilight'; color:#404040;">
+                  <input id="name_1" type="text" required="" class="form-control form-control" placeholder="제목" name="member_id" style="margin-right:10px; flex:2 1 0%; background:#fff;">
+                  <input id="name_2" type="text" required="" class="form-control form-control" placeholder="색상" name="member_id" style="background:#fff;">
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="text-label" >기간 설정</label>
+               <div class="btn-group mb-2" style="width: 100%; font-family: 'noto_demilight'; color:''#404040';">
+                  <button type="button" class="btn btn-light" style="font-family: 'noto_light'; color:#404040;">일주일내</button>
+                  <button type="button" class="btn btn-light" style="font-family: 'noto_light'; color:#404040;">이번주내</button>
+                  <button type="button" class="btn btn-light" style="font-family: 'noto_light'; color:#404040;">이번달내</button>
+                  <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modal-date" style="font-family: 'noto_light'; color:#404040;">날짜선택</button>
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="text-label" >시간 설정</label>
+               <div class="btn-group mb-2" style="width: 100%;">
+                  <button type="button" class="btn btn-light" style="font-family: 'noto_light'; color:#404040;">1시간</button>
+                  <button type="button" class="btn btn-light" style="font-family: 'noto_light'; color:#404040;">2시간</button>
+                  <button type="button" class="btn btn-light" style="font-family: 'noto_light'; color:#404040;">3시간</button>
+                  <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modal-time" style="font-family: 'noto_light'; color:#404040;">시간선택</button>
+               </div>
+            </div>
+            <div class="form-group" >
+               <label class="text-label" for="password_2">장소</label>
+               <div class="input-group input-group-merge">
+                  <input id="password_2" type="text" required="" class="form-control form-control" placeholder="장소 입력" name="member_name" style="background:#fff;">
+               </div>
+            </div>
+            <div class="form-group" style="margin-bottom:6rem;">
+               <label class="text-label" for="password_2">참석자 선택</label>
+               <div class="card card-form" style="border:none">
+                  <div class="row no-gutters">
+                     <div class="col-lg-12 card-form__body">
+                        <div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                           <table class="table mb-0 thead-border-top-0">
+                              <tbody class="list" id="staff">
+                                 <tr class="selected">
+                                    <td>
+                                       <div class="media align-items-center">
+                                          <div class="avatar avatar-xs mr-2">
+                                             <img src="/images/avatar/blue.svg" class="mr-2" alt="avatar" />
+                                          </div>
+                                          <div class="media-body">
+                                             <span class="js-lists-values-employee-name">서희륜</span>
+                                          </div>
+                                       </div>
+                                    </td>
+                                    <td>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="customCheck1_1">
+                                          <label class="custom-control-label" for="customCheck1_1"><span class="text-hide">Check</span></label>
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td>
+                                       <div class="media align-items-center">
+                                          <img src="/images/avatar/green.svg" class="mr-2" alt="avatar" />
+                                          <div class="media-body">
+                                             <span class="js-lists-values-employee-name">홍길동</span>
+                                          </div>
+                                       </div>
+                                    </td>
+                                    <td>
+                                       <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input js-check-selected-row" id="customCheck2_1">
+                                          <label class="custom-control-label" for="customCheck2_1"><span class="text-hide">Check</span></label>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="form-group text-center">
+               <button class="btn btn-primary mb-2" onclick="onPage('filter')" style="width:100%;">일정필터 </button><br>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

@@ -64,7 +64,9 @@ class MyCalender{
     $(".fc-next-button").css("position","absolute");
     $(".fc-next-button").css("right","0");
 
-    $(".fc-center > h2").css("font-size","20px");
+    $(".fc-center > h2").css("font-size","16px");
+    $(".fc-center > h2").css("font-family","noto_bold");
+    $(".fc-center > h2").css("line-height","1px");
 
     $(".btn-primary").css("background-color","#FAFBFE");
     $(".btn-primary").css("border-color","#FAFBFE");
