@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class MemberService {
     private final MemberRepository memberRepository;
 
+    /** 회원 가입 **/
     public List<MemberDTO> save(Member member){
         List<MemberDTO> resultMembers = new ArrayList<>();
 
@@ -28,6 +29,7 @@ public class MemberService {
         return resultMembers;
     }
 
+    /** 로그인 **/
     public List<MemberDTO> findMemberIdWithPw(SigninMemberForm memberForm){
         List<Member> findMembers = memberRepository.findOneMemberIdWithPw(memberForm.getMember_id(), memberForm.getMember_pw());
 
@@ -38,6 +40,8 @@ public class MemberService {
         return resultMembers;
     }
 
+
+    /** 회원가입 중복 검사**/
     public boolean isValidateMember(Member member){
         List<Member> findMembers = memberRepository.findAllMemberId(member.getMember_id());
 
