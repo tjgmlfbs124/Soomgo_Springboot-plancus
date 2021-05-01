@@ -120,7 +120,11 @@
 
       service.signin(formData, function(result){
         console.log("result : " , result);
-        location.href="/calender/monthly";
+        if (result.length <= 0)
+          alert("등록된 회원이 아닙니다.")
+        else{
+          location.href="/calender/monthly";
+        }
       });
     }
 </script>

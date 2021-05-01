@@ -3,34 +3,37 @@ package com.milestone.plancus.Api;
 import com.milestone.plancus.Api.DTO.MemberDTO;
 import com.milestone.plancus.Api.Form.SigninMemberForm;
 import com.milestone.plancus.Api.Form.SignupMemberForm;
+import com.milestone.plancus.Domain.Member;
+import com.milestone.plancus.Service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 public class MemberApiController {
+    private final MemberService memberService;
 
     @PostMapping("/signup")
-    public MemberDTO signup(SignupMemberForm member, HttpSession httpSession){
+    public List<MemberDTO> signup(SignupMemberForm member, HttpSession httpSession){
 
-        System.out.println("id = " + member.getMember_id());
-        System.out.println("pw = " + member.getMember_pw());
-        System.out.println("name = " + member.getMember_name());
-        System.out.println("role = " + member.getMember_role());
+        Member saveMember = new Member(member.getMember_id(), member.getMember_pw(), member.getMember_name(), member.getMember_role());
 
-        MemberDTO memberDTO = new MemberDTO(member.getMember_id(), member.getMember_name(), member.getMember_role());
+        return memberService.save(saveMember);
 
-        return memberDTO;
     }
 
     @PostMapping("/signin")
-    public MemberDTO signin(SigninMemberForm member, HttpSession httpSession){
-
-        MemberDTO memberDTO = new MemberDTO(member.getMember_id(), member.getMember_name(), member.getMember_role());
-
-        return memberDTO;
+    public List<MemberDTO> signin(SigninMemberForm member, HttpSession httpSession){
+        List<MemberDTO> findMembers = memberService.findMemberIdWithPw(member);
+        if (findMembers.size() > 0 ){
+            httpSession.setAttribute("member",findMembers.stream().findFirst());
+        }
+        return findMembers;
     }
 }

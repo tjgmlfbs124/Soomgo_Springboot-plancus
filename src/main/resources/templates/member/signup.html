@@ -115,8 +115,12 @@
       formData.append("member_role", $("input[name=member_role]").val());
 
       service.signup(formData, function(result){
-        console.log("result : " , result);
-        location.href="/";
+        if (result.length <= 0)
+          alert("이미 가입된 아이디입니다.")
+        else{
+            alert("등록되었습니다.")
+            location.href="/";
+        }
       });
     }
 

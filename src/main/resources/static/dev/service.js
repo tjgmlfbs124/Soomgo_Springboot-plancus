@@ -10,7 +10,8 @@ class Service{
    */
   signup(formData, callback){
     this.restfulApi.postAPI("/signup",formData, function(result){
-      callback(result);
+      var json = JSON.parse(result);
+      callback(json);
     })
   }
 
@@ -22,7 +23,8 @@ class Service{
    */
   signin(formData, callback){
     this.restfulApi.postAPI("/signin", formData, function(result){
-      callback(result);
+      var json = JSON.parse(result);
+      callback(json);
     })
   }
 }
