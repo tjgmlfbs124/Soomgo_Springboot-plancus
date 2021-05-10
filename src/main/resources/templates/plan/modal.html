@@ -12,15 +12,15 @@
          <div class="modal-body">
             <div class="card">
                <div class="card-body">
-                  <label class="text-label" for="flatpickrSample01">Date</label>
-                  <input id="flatpickrSample01" type="text" class="form-control" placeholder="Flatpickr example" data-toggle="flatpickr" value="today">
+                  <label class="text-label" for="modal_periodDate">Date</label>
+                  <input id="modal_periodDate" type="text" class="form-control" placeholder="Flatpickr example" data-toggle="flatpickr" value="today">
                </div>
             </div>
          </div>
          <!-- // END .modal-body -->
          <div class="modal-footer">
             <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onClickDate()">Save changes</button>
          </div>
          <!-- // END .modal-footer -->
       </div>
@@ -42,24 +42,24 @@
       <div class="modal-body">
          <div class="container-fluid page__container" style="padding:0px;">
             <div class="form-group" style="margin-bottom:10px;">
-               <label class="text-label" for="password_2">선택날짜</label>
+               <label class="text-label" for="password_2">선택한 기간</label>
                <div class="input-group input-group-merge">
-                  <input id="name_12" type="text" required="" class="form-control form-control" placeholder="제목" name="member_id" style="margin-right:10px; flex:2 1 0%;">
+                  <input type="text" class="form-control form-control" style="margin-right:10px; flex:2 1 0%;" name="input-select-period" readonly>
                   <div class="flex mt-10" >
                      <div class="custom-control custom-checkbox-toggle custom-control-inline mr-1" style="float:right; margin-top:5px">
-                        <input checked="false" type="checkbox" id="subscribe" class="custom-control-input">
-                        <label class="custom-control-label" for="subscribe"></label>
+                        <input type="checkbox" id="checkbox-today" class="custom-control-input">
+                        <label class="custom-control-label" for="checkbox-today"></label>
                      </div>
                      <label for="subscribe" style="float:right; margin:7px 3px 0px 0px">종일</label>
                   </div>
                </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="form-select-times">
                <label class="text-label" for="password_2">시간</label>
                <div class="input-group input-group-merge">
-                  <input id="flatpickrSample05" type="text" class="form-control" placeholder="Flatpickr time example" data-toggle="flatpickr" data-flatpickr-enable-time="true" data-flatpickr-no-calendar="true" data-flatpickr-alt-format="H:i" data-flatpickr-date-format="H:i" value="15:35" >
+                  <input name="input-startTimes" type="text" class="form-control" placeholder="Flatpickr time example" data-toggle="flatpickr" data-flatpickr-enable-time="true" data-flatpickr-no-calendar="true" data-flatpickr-alt-format="H:i" data-flatpickr-date-format="H:i" value="09:00" >
                   <span style="margin:10px;"> ~ </span>
-                  <input id="flatpickrSample06" type="text" class="form-control" placeholder="Flatpickr time example" data-toggle="flatpickr" data-flatpickr-enable-time="true" data-flatpickr-no-calendar="true" data-flatpickr-alt-format="H:i" data-flatpickr-date-format="H:i" value="15:35" >
+                  <input name="input-endTimes" type="text" class="form-control" placeholder="Flatpickr time example" data-toggle="flatpickr" data-flatpickr-enable-time="true" data-flatpickr-no-calendar="true" data-flatpickr-alt-format="H:i" data-flatpickr-date-format="H:i" value="13:00" >
                </div>
             </div>
          </div>
@@ -67,7 +67,7 @@
       <!-- // END .modal-body -->
       <div class="modal-footer">
          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-         <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onClickTimes()" >Save changes</button>
       </div>
       <!-- // END .modal-footer -->
    </div>
@@ -87,13 +87,41 @@
                 </button>
             </div> <!-- // END .modal-header -->
             <div class="modal-body">
-                <p>2021년 4월 30일 15:30</p>
+                <p id="modal-confirm-date"></p>
+                <p id="modal-confirm-time"></p>
                 <p>확정하시겠습니까?</p>
             </div> <!-- // END .modal-body -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="location.href='/calender/monthly'">Save changes</button>
+                <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="onClickSubmit()">Submit</button>
             </div> <!-- // END .modal-footer -->
         </div> <!-- // END .modal-content -->
     </div> <!-- // END .modal-dialog -->
 </div> <!-- // END .modal -->
+
+<script>
+  function onClickDate() {
+    planHelper.setLimitedDays( new Date($("#modal_periodDate").val()))
+  }
+
+  function onClickTimes() {
+    if($("#checkbox-today").is(":checked")){
+      planHelper.setTimes("09:00","18:00");
+    }
+    else{
+      var start = $("input[name=input-startTimes]").val();
+      var end = $("input[name=input-endTimes]").val();
+      planHelper.setTimes(start, end);
+    }
+  }
+
+  function onClickSubmit(){
+    devService.submitPlan(function(result){
+      console.log("result : " ,result);
+      if (result.length > 0 ) {
+        alert("등록되었습니다.");
+        location.href="/calender/monthly"
+      }
+    });
+  }
+</script>

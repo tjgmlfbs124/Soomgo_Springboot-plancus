@@ -7,9 +7,8 @@
                   <nav aria-label="breadcrumb" style="float:left">
                      <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="/"><i class="material-icons icon-20pt">home</i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Calendar</li>
-                        <li class="breadcrumb-item active" aria-current="page">New</li>
-                         <li class="breadcrumb-item active" aria-current="page">Filter</li>
+                        <li class="breadcrumb-item active" aria-current="page" onclick="onPage('plan')" style="cursor:pointer;">일정추가</li>
+                        <li class="breadcrumb-item active" aria-current="page" onclick="onPage('filter')" style="cursor:pointer;"><a>일정필터</a></li>
                      </ol>
                   </nav>
                   <h4 class="m-0" style="float:right; font-family: 'noto_bold';">일정 필터</h4>
@@ -28,14 +27,10 @@
                                        <tr>
                                            <th style="width: 30px;" class="text-center">시간</th>
                                            <th style="width: 18px;">
-                                               <div class="custom-control custom-checkbox" style="float:right;">
-                                                   <input type="checkbox" class="custom-control-input js-toggle-check-all"  checked="" data-target="#times" id="timeCheckAll">
-                                                   <label class="custom-control-label" for="timeCheckAll"><span class="text-hide">Toggle all</span></label>
-                                               </div>
                                            </th>
                                        </tr>
                                    </thead>
-                                   <tbody class="list" id="times">
+                                   <tbody class="list" id="availableTimeTable">
                                        <tr class="selected">
                                            <td>
                                                <div class="media align-items-center">
@@ -46,12 +41,12 @@
                                            </td>
                                            <td>
                                                <div class="custom-control custom-checkbox" style="float:right;">
-                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" checked=""  id="customCheck1_1" style="border:1px">
-                                                   <label class="custom-control-label" for="customCheck1_1"><span class="text-hide">Check</span></label>
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" checked=""  id="availabeTimes_1" style="border:1px">
+                                                   <label class="custom-control-label" for="availabeTimes_1" data-start="09:00" data-end="12:00"><span class="text-hide">Check</span></label>
                                                </div>
                                            </td>
                                        </tr>
-                                       <tr class="selected">
+                                       <tr>
                                            <td>
                                                <div class="media align-items-center" style="text-align:center;">
                                                    <div class="media-body">
@@ -61,12 +56,12 @@
                                            </td>
                                            <td>
                                                <div class="custom-control custom-checkbox" style="float:right;">
-                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="customCheck2_1">
-                                                   <label class="custom-control-label" for="customCheck2_1"><span class="text-hide">Check</span></label>
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" id="availabeTimes_2">
+                                                   <label class="custom-control-label" for="availabeTimes_2" data-start="13:00" data-end="18:00"><span class="text-hide">Check</span></label>
                                                </div>
                                            </td>
                                        </tr>
-                                       <tr class="selected">
+                                       <tr>
                                            <td>
                                                <div class="media align-items-center" style="text-align:center;">
                                                    <div class="media-body">
@@ -76,8 +71,8 @@
                                            </td>
                                            <td>
                                                <div class="custom-control custom-checkbox" style="float:right;">
-                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="customCheck3_1">
-                                                   <label class="custom-control-label" for="customCheck3_1"><span class="text-hide">Check</span></label>
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" id="availabeTimes_3">
+                                                   <label class="custom-control-label" for="availabeTimes_3" data-start="19:00" data-end="21:00"><span class="text-hide">Check</span></label>
                                                </div>
                                            </td>
                                        </tr>
@@ -100,14 +95,10 @@
                                        <tr>
                                            <th style="width: 30px;" class="text-center">요일 선택</th>
                                            <th style="width: 18px;">
-                                               <div class="custom-control custom-checkbox" style="float:right;">
-                                                   <input type="checkbox" class="custom-control-input js-toggle-check-all"  checked="" data-target="#days" id="daysCheckAll">
-                                                   <label class="custom-control-label" for="daysCheckAll"><span class="text-hide">Toggle all</span></label>
-                                               </div>
                                            </th>
                                        </tr>
                                    </thead>
-                                   <tbody class="list" id="days">
+                                   <tbody class="list" id="availableDaysTable">
                                        <tr class="selected">
                                            <td>
                                                <div class="media align-items-center">
@@ -119,7 +110,7 @@
                                            <td>
                                                <div class="custom-control custom-checkbox" style="float:right;">
                                                    <input type="checkbox" class="custom-control-input js-check-selected-row" checked=""  id="monday" style="border:1px">
-                                                   <label class="custom-control-label" for="monday"><span class="text-hide">Check</span></label>
+                                                   <label class="custom-control-label" for="monday" data-index="2"><span class="text-hide">Check</span></label>
                                                </div>
                                            </td>
                                        </tr>
@@ -134,7 +125,7 @@
                                            <td>
                                                <div class="custom-control custom-checkbox" style="float:right;">
                                                    <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="tuesday">
-                                                   <label class="custom-control-label" for="tuesday"><span class="text-hide">Check</span></label>
+                                                   <label class="custom-control-label" for="tuesday" data-index="3"><span class="text-hide">Check</span></label>
                                                </div>
                                            </td>
                                        </tr>
@@ -149,7 +140,7 @@
                                            <td>
                                                <div class="custom-control custom-checkbox" style="float:right;">
                                                    <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="wednesday">
-                                                   <label class="custom-control-label" for="wednesday"><span class="text-hide">Check</span></label>
+                                                   <label class="custom-control-label" for="wednesday" data-index="4"><span class="text-hide">Check</span></label>
                                                </div>
                                            </td>
                                        </tr>
@@ -164,7 +155,7 @@
                                            <td>
                                                <div class="custom-control custom-checkbox" style="float:right;">
                                                    <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="thursday">
-                                                   <label class="custom-control-label" for="thursday"><span class="text-hide">Check</span></label>
+                                                   <label class="custom-control-label" for="thursday" data-index="5"><span class="text-hide">Check</span></label>
                                                </div>
                                            </td>
                                        </tr>
@@ -172,7 +163,7 @@
                                            <td>
                                                <div class="media align-items-center" style="text-align:center;">
                                                    <div class="media-body">
-                                                       <span class="js-lists-values-employee-name">금</span>
+                                                       <span class="js-lists-values-employee-name" data-index="6">금</span>
                                                    </div>
                                                </div>
                                            </td>
@@ -194,7 +185,7 @@
                                            <td>
                                                <div class="custom-control custom-checkbox" style="float:right;">
                                                    <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="saturday">
-                                                   <label class="custom-control-label" for="saturday"><span class="text-hide">Check</span></label>
+                                                   <label class="custom-control-label" for="saturday" data-index="7"><span class="text-hide">Check</span></label>
                                                </div>
                                            </td>
                                        </tr>
@@ -209,7 +200,7 @@
                                            <td>
                                                <div class="custom-control custom-checkbox" style="float:right;">
                                                    <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="sunday">
-                                                   <label class="custom-control-label" for="sunday"><span class="text-hide">Check</span></label>
+                                                   <label class="custom-control-label" for="sunday" data-index="1"><span class="text-hide">Check</span></label>
                                                </div>
                                            </td>
                                        </tr>
@@ -222,7 +213,7 @@
                </div>
             </div>
             <div class="form-group text-center">
-               <button class="btn btn-primary mb-2" onclick="onPage('ai')" style="width:100%;">일정 추천</button><br>
+               <button class="btn btn-primary mb-2" onclick="onFindPlan()" style="width:100%;">일정 추천</button><br>
             </div>
          </div>
       </div>

@@ -9,4 +9,5 @@ public class SignupMemberForm {
     private String member_name;
     private String member_pw;
     private String member_role;
+    private String member_initial;
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,7 +21,7 @@ public class MemberApiController {
     @PostMapping("/signup")
     public List<MemberDTO> signup(SignupMemberForm member, HttpSession httpSession){
 
-        Member saveMember = new Member(member.getMember_id(), member.getMember_pw(), member.getMember_name(), member.getMember_role());
+        Member saveMember = new Member(member.getMember_id(), member.getMember_pw(), member.getMember_name(), member.getMember_role(), member.getMember_initial());
 
         return memberService.save(saveMember);
 
@@ -30,10 +29,16 @@ public class MemberApiController {
 
     @PostMapping("/signin")
     public List<MemberDTO> signin(SigninMemberForm member, HttpSession httpSession){
-        List<MemberDTO> findMembers = memberService.findMemberIdWithPw(member);
-        if (findMembers.size() > 0 ){
-            httpSession.setAttribute("member",findMembers.stream().findFirst());
-        }
-        return findMembers;
+        List<Member> findMembers = memberService.findMemberIdWithPw(member);
+
+        if (findMembers.size() > 0 )
+            httpSession.setAttribute("member", findMembers.stream().findFirst().get());
+
+
+        List<MemberDTO> resultMembers = findMembers.stream().map(
+                o -> new MemberDTO(o.getMember_id(), o.getMember_name(), o.getMember_role(), o.getMember_initial())
+        ).collect(Collectors.toList());
+
+        return resultMembers;
     }
 }

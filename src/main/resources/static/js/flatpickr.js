@@ -825,6 +825,8 @@ __webpack_require__(/*! core-js/modules/es6.array.find */ "./node_modules/core-j
       wrap: void 0 !== element.data('flatpickr-wrap') ? element.data('flatpickr-wrap') : false,
       inline: void 0 !== element.data('flatpickr-inline') ? element.data('flatpickr-inline') : false,
       static: void 0 !== element.data('flatpickr-static') ? element.data('flatpickr-static') : false,
+      defaultHour: 10,
+      defaultMinute: 23,
       enableTime: void 0 !== element.data('flatpickr-enable-time') ? element.data('flatpickr-enable-time') : false,
       noCalendar: void 0 !== element.data('flatpickr-no-calendar') ? element.data('flatpickr-no-calendar') : false,
       appendTo: void 0 !== element.data('flatpickr-append-to') ? document.querySelector(element.data('flatpickr-append-to')) : undefined,

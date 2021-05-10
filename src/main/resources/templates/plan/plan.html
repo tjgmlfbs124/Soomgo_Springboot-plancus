@@ -7,9 +7,8 @@
                   <nav aria-label="breadcrumb" style="float:left">
                      <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="/"><i class="material-icons icon-20pt">home</i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Calendar</li>
-                        <li class="breadcrumb-item active" aria-current="page">New</li>
-                        <li class="breadcrumb-item active" aria-current="page">Plan</li>
+                        <li class="breadcrumb-item active" aria-current="page" onclick="onPage('plan')" style="cursor:pointer;"><a>일정추가</a></li>
+                        <li class="breadcrumb-item active" aria-current="page" onclick="onPage('filter')" style="cursor:pointer;">일정필터</li>
                      </ol>
                   </nav>
                   <h4 class="m-0" style="float:right; font-family: 'noto_bold';">일정추가</h4>
@@ -19,32 +18,59 @@
          <div class="container-fluid page__container">
             <div class="form-group">
                <div class="input-group input-group-merge" style="font-family: 'noto_demilight'; color:#404040;">
-                  <input id="name_1" type="text" required="" class="form-control form-control" placeholder="제목" name="member_id" style="margin-right:10px; flex:2 1 0%; background:#fff;">
-                  <input id="name_2" type="text" required="" class="form-control form-control" placeholder="색상" name="member_id" style="background:#fff;">
+                  <input id="name_1" type="text" required="" class="form-control form-control" placeholder="제목" name="title" style="margin-right:10px; flex:2 1 0%; background:#fff;">
+                  <select class="form-control form-white" data-placeholder="Choose a color..." name="color" style="background:#ffffff;">
+                      <option value="#FFFFFF">색상선택</option>
+                      <option value="#6774DF">Primary </option>
+                      <option value="#7DC668">Success</option>
+                      <option value="#ff7076">Danger</option>
+                      <option value="#5dd2bc">Info</option>
+                      <option value="#F5B666">Warning</option>
+                      <option value="#1C2260">Dark</option>
+                  </select>
+                  <i data-v-da9425c4="" class="material-icons icon-30pt" style="line-height:40px; margin-left:10px; color:#fff;" name="plan-color">lens</i>
                </div>
             </div>
             <div class="form-group">
-               <label class="text-label" >기간 설정</label>
-               <div class="btn-group mb-2" style="width: 100%; font-family: 'noto_demilight'; color:''#404040';">
-                  <button type="button" class="btn btn-light" style="font-family: 'noto_light'; color:#404040;">일주일내</button>
-                  <button type="button" class="btn btn-light" style="font-family: 'noto_light'; color:#404040;">이번주내</button>
-                  <button type="button" class="btn btn-light" style="font-family: 'noto_light'; color:#404040;">이번달내</button>
-                  <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modal-date" style="font-family: 'noto_light'; color:#404040;">날짜선택</button>
-               </div>
+               <label class="text-label">기간 설정</label>
+               <label class="text-label" style="color:#F5B666; font-size:0.7rem;" name="result-period"></label>
+               <div class="btn-group btn-group-toggle mb-2" data-toggle="buttons" style="width:100%;" name="periods">
+                    <label class="btn btn-light active"  style="font-family: 'noto_light'; color:#404040;" >
+                        <input type="radio" name="period" checked="" data-period="days"> 일주일내
+                    </label>
+                   <label class="btn btn-light"  style="font-family: 'noto_light'; color:#404040;" >
+                       <input type="radio" name="period" data-period="weeks"> 이번주내
+                   </label>
+                    <label class="btn btn-light"  style="font-family: 'noto_light'; color:#404040;" >
+                        <input type="radio" name="period" data-period="month"> 이번달내
+                    </label>
+                   <label class="btn btn-light"  style="font-family: 'noto_light'; color:#404040;" >
+                       <input type="radio" data-toggle="modal" data-target="#modal-date"> 날짜선택
+                   </label>
+                </div>
             </div>
             <div class="form-group">
                <label class="text-label" >시간 설정</label>
-               <div class="btn-group mb-2" style="width: 100%;">
-                  <button type="button" class="btn btn-light" style="font-family: 'noto_light'; color:#404040;">1시간</button>
-                  <button type="button" class="btn btn-light" style="font-family: 'noto_light'; color:#404040;">2시간</button>
-                  <button type="button" class="btn btn-light" style="font-family: 'noto_light'; color:#404040;">3시간</button>
-                  <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modal-time" style="font-family: 'noto_light'; color:#404040;">시간선택</button>
-               </div>
+               <label class="text-label" style="color:#F5B666; font-size:0.7rem;" name="result-times">( ~ +1시간)</label>
+               <div class="btn-group btn-group-toggle mb-2" data-toggle="buttons" style="width:100%;">
+                    <label class="btn btn-light active"  style="font-family: 'noto_light'; color:#404040;" >
+                        <input type="radio" name="times" checked="" data-times="1"> 1시간
+                    </label>
+                   <label class="btn btn-light"  style="font-family: 'noto_light'; color:#404040;" >
+                       <input type="radio" name="times" data-times="2"> 2시간
+                   </label>
+                    <label class="btn btn-light"  style="font-family: 'noto_light'; color:#404040;" >
+                        <input type="radio" name="times" data-times="3"> 3시간
+                    </label>
+                   <label class="btn btn-light"  style="font-family: 'noto_light'; color:#404040;" >
+                       <input type="radio" data-toggle="modal" data-target="#modal-time"> 시간선택
+                   </label>
+                </div>
             </div>
             <div class="form-group" >
-               <label class="text-label" for="password_2">장소</label>
+               <label class="text-label">장소</label>
                <div class="input-group input-group-merge">
-                  <input id="password_2" type="text" required="" class="form-control form-control" placeholder="장소 입력" name="member_name" style="background:#fff;">
+                  <input type="text" class="form-control form-control" placeholder="장소 입력" name="local" style="background:#fff;">
                </div>
             </div>
             <div class="form-group" style="margin-bottom:6rem;">
@@ -54,38 +80,22 @@
                      <div class="col-lg-12 card-form__body">
                         <div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
                            <table class="table mb-0 thead-border-top-0">
-                              <tbody class="list" id="staff">
-                                 <tr class="selected">
+                              <tbody class="list" id="joinMemberTable" >
+                                 <tr th:each="list : ${members}">
                                     <td>
                                        <div class="media align-items-center">
                                           <div class="avatar avatar-xs mr-2">
-                                             <img src="/images/avatar/blue.svg" class="mr-2" alt="avatar" />
+                                              <span class="avatar-title rounded-circle" th:text="${list.member_initial}">AD</span>
                                           </div>
                                           <div class="media-body">
-                                             <span class="js-lists-values-employee-name">서희륜</span>
+                                             <span class="js-lists-values-employee-name" th:text="${list.member_name}"></span>
                                           </div>
                                        </div>
                                     </td>
                                     <td>
                                        <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="customCheck1_1">
-                                          <label class="custom-control-label" for="customCheck1_1"><span class="text-hide">Check</span></label>
-                                       </div>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <td>
-                                       <div class="media align-items-center">
-                                          <img src="/images/avatar/green.svg" class="mr-2" alt="avatar" />
-                                          <div class="media-body">
-                                             <span class="js-lists-values-employee-name">홍길동</span>
-                                          </div>
-                                       </div>
-                                    </td>
-                                    <td>
-                                       <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input js-check-selected-row" id="customCheck2_1">
-                                          <label class="custom-control-label" for="customCheck2_1"><span class="text-hide">Check</span></label>
+                                          <input type="checkbox" class="custom-control-input js-check-selected-row" th:id="'user_' + ${list.member_id}">
+                                          <label class="custom-control-label" for="memberList_1" th:name="'user_' + ${list.member_id}"><span class="text-hide">Check</span></label>
                                        </div>
                                     </td>
                                  </tr>
@@ -97,7 +107,7 @@
                </div>
             </div>
             <div class="form-group text-center">
-               <button class="btn btn-primary mb-2" onclick="onPage('filter')" style="width:100%;">일정필터 </button><br>
+               <button class="btn btn-primary mb-2" onclick="onPage('filter')" style="width:100%;">일정필터</button><br>
             </div>
          </div>
       </div>

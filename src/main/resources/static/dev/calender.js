@@ -6,14 +6,13 @@ class MyCalender{
 
   setOption(target, period, eventCallback){
     var element = $(target);
-    console.log("element : " , element);
 
     this.options = {
       themeSystem: 'bootstrap4',
       closeButton: void 0 !== element.data('toastr-close-button') ? element.data('toastr-close-button') : false,
-      slotDuration: '00:45:00',
-      minTime: '08:00:00',
-      maxTime: '19:00:00',
+      slotDuration: '02:00:00',
+      minTime: '00:00:00',
+      maxTime: '23:59:59',
       defaultView: period,
       handleWindowResize: true,
       height: $(window).height() - 50,
@@ -48,7 +47,6 @@ class MyCalender{
   }
 
   drawCalendar(target, options){
-    console.log("target : ", target);
     target.fullCalendar(options);
     this.setButtonStyle();
   }

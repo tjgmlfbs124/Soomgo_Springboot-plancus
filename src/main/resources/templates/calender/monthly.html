@@ -50,7 +50,20 @@
 
         <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
             <div class="mdk-drawer-layout__content page">
-                <div th:replace="calender/header"></div>
+              <div class="container-fluid page__heading-container">
+                  <div class="page__heading d-flex align-items-center" style="margin-bottom:20px;">
+                      <div class="flex">
+                          <nav aria-label="breadcrumb">
+                              <ol class="breadcrumb mb-0">
+                                  <li class="breadcrumb-item"><a href="/"><i class="material-icons icon-20pt">home</i></a></li>
+                                  <li class="breadcrumb-item active" aria-current="page" onclick="location.href='/calender/monthly'" style="cursor:pointer;" ><a>Calendar</a></li>
+                              </ol>
+                          </nav>
+                      </div>
+                      <a href="/plan/new" class="btn ml-3" style="background-color:#5478B5; color:#fff;">New<i class="material-icons">add</i></a>
+                  </div>
+              </div>
+
                 <div class="container-fluid page__container">
                     <div class="row">
                         <div class="col-lg-9">
@@ -63,17 +76,10 @@
                             <div id="external-events">
                                 <p class="text-muted" style="font-family:'noto_bold';">오늘의 일정
                                   <span style="float:right;"> <i data-v-da9425c4="" class="material-icons icon-10pt" style="cursor:pointer;">mode_edit</i> </span>
+                                  <div id="today-plan-empty"class="external-event" style="position:relative; min-height:90px; background:#c3c3c3">
+                                      <span class="external-event__title" style="line-height:2;">오늘의 일정이 없습니다.</span>
+                                  </div>
                                 </p>
-                                <div class="external-event bg-success" data-class="bg-success" style="position:relative;">
-                                    <i class="mr-2 material-icons" style="line-height:1.25;">drag_handle</i>
-                                    <span class="external-event__title" style="line-height:2;">앱디자인</span>
-                                    <span class="external-event__title" style="line-height:2; position:absolute; right:8px;">11:00 ~ 13:00</span>
-                                </div>
-                                <div class="external-event bg-warning" data-class="bg-warning" style="position:relative;">
-                                    <i class="mr-2 material-icons" style="line-height:1.25;">drag_handle</i>
-                                    <span class="external-event__title" style="line-height:2;">마일스톤 CI 리디자인</span>
-                                    <span class="external-event__title" style="line-height:2; position:absolute; right:8px;">07:30 ~ 11:00</span>
-                                </div>
                             </div>
                         </div> <!-- end col-->
                     </div> <!-- end row -->
@@ -198,51 +204,72 @@
 
 <!-- FullCalendar -->
 <script src="/vendor/fullcalendar/fullcalendar.min.js"></script>
-<script src="/vendor/fullcalendar/ko.js"></script>
+
+<!-- DEV -->
+<script src="/dev/service.js"></script>
+<script src="/dev/restfulApi.js"></script>
+
 <script>
-  const mc = new MyCalender();
-  var today = new Date();
-  var date = (today.getDate(), today.getMonth(), today.getFullYear(), new Date($.now()));
+  $(document).ready(function() {
+    const myService = new Service();
+    const mc = new MyCalender();
+    mc.events = [];
 
-  console.log("new Date($.now() + 158e6) : ", new Date($.now() + 158e6))
+    myService.findMemberPlan(function(result){
+      console.log("result :"  , result);
+      result.forEach((item, i) => {
+        var today = new Date();
+        var itemStartDate =  new Date(item.startTime);
+        var itemEndDate =  new Date(item.endTime);
 
-  mc.events = [{
-    title: "Hey!",
-    start: new Date("2021-04-29 11:11:11"),
-    plan : 123123,
-    className: "bg-warning"
-  }, {
-    title: "See John Deo",
-    start: date,
-    id : 123123,
-    className: "bg-success"
-  }, {
-    title: "Meet John Deo",
-    start: new Date($.now() + 168e6),
-    className: "bg-info"
-  }, {
-    title: "Buy a Theme",
-    start: new Date($.now() + 338e6),
-    className: "bg-primary"
-  }];
+        if ( today.yyyymmdd() == itemStartDate.yyyymmdd() ) {
+          $("#today-plan-empty").hide();
+          $("#external-events").append(
+            "<div class=\"external-event bg-success\" data-class=\"bg-success\" style=\"position:relative;\">"+
+                "<i class=\"mr-2 material-icons\" style=\"line-height:1.25;\">drag_handle</i>"+
+                "<span class=\"external-event__title\" style=\"line-height:2;\">" + item.title + "</span>"+
+                "<span class=\"external-event__title\" style=\"line-height:2; position:absolute; right:8px;\">" + itemStartDate.hhMM() + " ~ " + itemEndDate.hhMM() +"</span>"+
+            "</div>"
+          )
+        }
 
-  mc.setOption('#calendar', 'month', function(event, jsEvent, view, calendar) {
-    console.log("ev")
-    console.log("date : " , new Date(event.start._d).yyyymmdd());
-    location.href="/calender/weekly";
+        mc.events.push({
+          title: item.title,
+          planId : item.id,
+          start : new Date(item.startTime),
+          end : new Date(item.endTime),
+          host: item.host.member_name,
+          local: item.local,
+          className: "bg-success"
+        })
+      });
 
+      mc.setOption('#calendar', 'month', function(event, jsEvent, view, calendar) {
+        location.href="/calender/weekly";
+      });
+    })
   });
 
-  Date.prototype.yyyymmdd = function() {
-  var mm = this.getMonth() + 1; // getMonth() is zero-based
-  var dd = this.getDate();
 
-  return [this.getFullYear(),
-          (mm>9 ? '' : '0') + mm,
-          (dd>9 ? '' : '0') + dd
-         ].join('');
+  Date.prototype.yyyymmdd = function() {
+    var mm = this.getMonth() + 1; // getMonth() is zero-based
+    var dd = this.getDate();
+
+    return [this.getFullYear(),
+            (mm>9 ? '' : '0') + mm,
+            (dd>9 ? '' : '0') + dd
+           ].join('');
   };
 
+  Date.prototype.hhMM = function() {
+    var hh = this.getHours()
+    var MM = this.getMinutes();
+
+    return [
+            (hh<10 ? '0' : '') + hh,
+            (MM<10 ? '0' : '') + MM
+          ].join(':');
+  };
 
 </script>
 

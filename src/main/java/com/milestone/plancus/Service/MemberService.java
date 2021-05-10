@@ -17,6 +17,15 @@ import java.util.stream.Collectors;
 public class MemberService {
     private final MemberRepository memberRepository;
 
+    public List<MemberDTO> findAll(){
+        List<Member> findMembers = memberRepository.findAll();
+        List<MemberDTO> memberToDtos = findMembers.stream().map(
+                o -> new MemberDTO(o.getMember_id(), o.getMember_name(), o.getMember_role(), o.getMember_initial())
+        ).collect(Collectors.toList());
+
+        return memberToDtos;
+    }
+
     /** 회원 가입 **/
     public List<MemberDTO> save(Member member){
         List<MemberDTO> resultMembers = new ArrayList<>();
@@ -24,26 +33,28 @@ public class MemberService {
         if (!isValidateMember(member)){
             Member saveMember = memberRepository.save(member);
 
-            resultMembers.add(new MemberDTO(saveMember.getMember_id(), saveMember.getMember_name(), saveMember.getMember_role()));
+            resultMembers.add(new MemberDTO(saveMember.getMember_id(), saveMember.getMember_name(), saveMember.getMember_role(), saveMember.getMember_initial()));
         }
         return resultMembers;
     }
 
     /** 로그인 **/
-    public List<MemberDTO> findMemberIdWithPw(SigninMemberForm memberForm){
-        List<Member> findMembers = memberRepository.findOneMemberIdWithPw(memberForm.getMember_id(), memberForm.getMember_pw());
+    public List<Member> findMemberIdWithPw(SigninMemberForm memberForm){
+        List<Member> findMembers = memberRepository.findMemberByLogIdWithPw(memberForm.getMember_id(), memberForm.getMember_pw());
 
-        List<MemberDTO> resultMembers = findMembers.stream().map(
-                o -> new MemberDTO(o.getMember_id(), o.getMember_name(), o.getMember_role())
-        ).collect(Collectors.toList());
+        return findMembers;
+    }
+    
+    /** 회원 로그인 ID를 가지고 멤버 Entity 검색 **/
+    public List<Member> findMemberById(String loginId){
 
-        return resultMembers;
+        return memberRepository.findMemberByLogId(loginId);
     }
 
 
     /** 회원가입 중복 검사**/
     public boolean isValidateMember(Member member){
-        List<Member> findMembers = memberRepository.findAllMemberId(member.getMember_id());
+        List<Member> findMembers = memberRepository.findMemberByLogId(member.getMember_id());
 
         return findMembers.size() > 0;
     }

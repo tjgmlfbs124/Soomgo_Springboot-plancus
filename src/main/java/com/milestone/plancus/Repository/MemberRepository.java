@@ -17,8 +17,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Member save(Member member);
 
     @Query("select m from Member m where member_id = :memberId")
-    List<Member> findAllMemberId(@Param("memberId") String memberId);
+    List<Member> findMemberByLogId(@Param("memberId") String memberId);
 
     @Query("select m from Member m where member_id = :memberId and member_pw = :memberPw")
-    List<Member> findOneMemberIdWithPw(@Param("memberId") String memberId, @Param("memberPw") String memberPw);
+    List<Member> findMemberByLogIdWithPw(@Param("memberId") String memberId, @Param("memberPw") String memberPw);
 }

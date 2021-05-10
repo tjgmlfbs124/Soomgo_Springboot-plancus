@@ -30,7 +30,7 @@ public class MemberApiControllerTest {
 
 
     public boolean isValidateMember(Member member){
-        List<Member> findMembers = memberRepository.findAllMemberId(member.getMember_id());
+        List<Member> findMembers = memberRepository.findMemberByLogId(member.getMember_id());
         System.out.println("findMembers = " + findMembers.size());
         return findMembers.size() > 0;
     }

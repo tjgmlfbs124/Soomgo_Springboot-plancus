@@ -64,9 +64,7 @@
     <div th:replace="widget/header"></div>
      <div th:replace="plan/plan"></div>
      <div th:replace="plan/filter"></div>
-     <div th:replace="plan/ai"></div>
-
-
+     <div th:replace="plan/filterResult"></div>
    </div>
    <div th:replace="widget/nav"></div>
    <div th:replace="plan/modal"></div>
@@ -86,7 +84,7 @@
 <script src="/js/toggle-check-all.js"></script>
 <script src="/js/check-selected-row.js"></script>
 <script src="/js/dropdown.js"></script>
-<script src="/js/sidebar-mini.js"></script>
+<!-- <script src="/js/sidebar-mini.js"></script> -->
 <script src="/js/app.js"></script>
 <script src="/dev/calender.js"></script>
 <!-- jQuery UI (for draggable) -->
@@ -97,29 +95,50 @@
 <!-- Flatpickr -->
 <script src="/vendor/flatpickr/flatpickr.min.js"></script>
 <script src="/js/flatpickr.js"></script>
+
+<script src="/dev/newEvnetListener.js"></script>
+<script src="/dev/Calender/planHelper.js"></script>
+<script src="/dev/Calender/FilterHelper.js"></script>
+<script src="/dev/service.js"></script>
+<script src="/dev/restfulApi.js"></script>
 <script>
   $("#newFilterDocument").hide();
-  $("#newAiDocument").hide();
+  $("#newFilterResultDocument").hide();
+
+  let planHelper = new PlanHelper();
+  let filterHelper = new FilterHelper();
+  let devService = new Service();
+
   function onPage(pg){
     switch (pg) {
       case 'plan' :
         $("#newPlanDocument").show();
         $("#newFilterDocument").hide();
-        $("#newAiDocument").hide();
+        $("#newFilterResultDocument").hide();
         break;
       case 'filter':
         $("#newPlanDocument").hide();
         $("#newFilterDocument").show();
-        $("#newAiDocument").hide();
+        $("#newFilterResultDocument").hide();
         break;
-      case 'ai':
+      case 'filterResult':
         $("#newPlanDocument").hide();
         $("#newFilterDocument").hide();
-        $("#newAiDocument").show();
+        $("#newFilterResultDocument").show();
         break;
       default:
-
     }
+  }
+
+  function onFindPlan(){
+    devService.findAvaiablePlan(planHelper, function(result){
+
+      const maxLength = result.result.length > 5 ? 5 : result.result.length;
+
+      filterHelper.showResult(result, maxLength);
+
+      onPage('filterResult');
+    });
   }
 </script>
 
