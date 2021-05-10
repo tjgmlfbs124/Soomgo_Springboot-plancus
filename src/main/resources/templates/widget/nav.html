@@ -4,18 +4,16 @@
       <div class="sidebar sidebar-light sidebar-left sidebar-p-t" data-perfect-scrollbar>
          <div class="sidebar-heading">Menu</div>
          <ul class="sidebar-menu">
-            <li class="sidebar-menu-item">
-               <a class="sidebar-menu-button" data-toggle="collapse" href="#dashboards_menu">
-               <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">dvr</i>
-               <span class="sidebar-menu-text">Dashboards</span>
-               <span class="ml-auto sidebar-menu-toggle-icon"></span>
+            <li class="sidebar-menu-item"  onclick="location.href='/'" style="cursor:pointer;">
+               <a class="sidebar-menu-button" data-toggle="collapse">
+                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">event_available</i>
+                 <span class="sidebar-menu-text">Calender</span>
                </a>
             </li>
-             <li class="sidebar-menu-item">
-                <a class="sidebar-menu-button" data-toggle="collapse" href="#dashboards_menu">
-                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">dvr</i>
-                <span class="sidebar-menu-text">Logout</span>
-                <span class="ml-auto sidebar-menu-toggle-icon"></span>
+             <li class="sidebar-menu-item" onclick="location.href='/signout'" style="cursor:pointer;">
+                <a class="sidebar-menu-button" data-toggle="collapse">
+                  <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">person</i>
+                  <span class="sidebar-menu-text">Logout</span>
                 </a>
              </li>
          </ul>

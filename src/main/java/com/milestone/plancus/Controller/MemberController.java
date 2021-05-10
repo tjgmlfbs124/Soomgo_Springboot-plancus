@@ -17,6 +17,13 @@ public class MemberController {
         return "member/signup";
     }
 
+    @GetMapping("/signout")
+    public String signout(HttpSession httpSession){
+        httpSession.removeAttribute("member");
+
+        return "redirect:/";
+    }
+
     @GetMapping("/calender/{type}")
     public String calender(@PathVariable("type") String type, HttpSession httpSession, Model model){
         if ((Member)httpSession.getAttribute("member") == null){

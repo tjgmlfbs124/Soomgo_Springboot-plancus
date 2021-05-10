@@ -71,13 +71,16 @@ public class PlanService {
 
                 // 하루씩 증가하는 검색날짜안에서 요구한 일정시간이 되는지 찾아본다. (collect 값이 있으면 불가능, 없으면 가능)
                 List<Plan> collect = member.getPlans().stream().filter(
-                        dates -> !((dates.getStartTime().isBefore(startSearchDateTime) && dates.getStartTime().isBefore(endSearchDateTime)) ||
-                                (dates.getEndTime().isAfter(startSearchDateTime) && dates.getEndTime().isAfter(endSearchDateTime)))
+                        dates -> !(
+                                (startSearchDateTime.isBefore(dates.getStartTime()) && endSearchDateTime.isBefore(dates.getStartTime())) ||
+                                (startSearchDateTime.isAfter(dates.getEndTime()) && endSearchDateTime.isAfter(dates.getEndTime()))
+                        )
                 ).collect(Collectors.toList());
 
                 String isJoin = collect.size() > 0 ? "불가능" : "가능";
 
-                System.out.println("\n" + member.getMember_name() + "님 " + startSearchDate.toString() +" [" + isJoin+ "]\n");
+
+//                System.out.println("\n" + member.getMember_name() + "님 " + startSearchDate.toString() +" [" + isJoin+ "]\n");
 
                 if (collect.size() > 0){
                     attendance.addNegativeMember(member);
@@ -94,6 +97,10 @@ public class PlanService {
         }
 
         return filterResult;
+    }
+
+    public void print(){
+
     }
 
     public List<Long> savePlan(SavePlanForm form){

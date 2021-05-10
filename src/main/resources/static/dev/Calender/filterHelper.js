@@ -44,7 +44,7 @@ class FilterHelper{
         " <td style=\"padding:0.1rem 0.5rem;\">" +
         "   <div class=\"custom-control custom-checkbox\" style=\"float:right;\">" +
         "     <input type=\"checkbox\" class=\"custom-control-input js-check-selected-row\" id=\"customCheck" + i + "\" style=\"border:1px\">" +
-        "     <label class=\"custom-control-label\" for=\"customCheck" +i + "\"><span class=\"text-hide\">Check</span></label>" +
+        "     <label class=\"custom-control-label\" for=\"customCheck" + i + "\"><span class=\"text-hide\">Check</span></label>" +
         "     </div>" +
         "   </div>" +
         " </td>" +
@@ -52,7 +52,7 @@ class FilterHelper{
       );
 
       var conflictHTML = "" +
-          "<tr>" +
+          "<tr data-index=\"list-conflict-" + i + "\">" +
           " <td>" +
           "   <div class=\"media align-items-left\">" +
           "     <div class=\"media-body\">" +
