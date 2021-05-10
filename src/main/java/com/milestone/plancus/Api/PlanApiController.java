@@ -8,6 +8,7 @@ import com.milestone.plancus.Api.Form.FindPlanForm;
 import com.milestone.plancus.Api.Form.SavePlanForm;
 import com.milestone.plancus.Domain.Member;
 import com.milestone.plancus.Domain.Plan;
+import com.milestone.plancus.Domain.PlanFilterHead;
 import com.milestone.plancus.Service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
@@ -65,5 +66,13 @@ public class PlanApiController {
         }
 
         return plans;
+    }
+
+    @PostMapping("/plan/request")
+    public PlanFilterHead requestPlan(PlanFilterHead headForm, HttpSession httpSession){
+
+        System.out.println("headForm = " + headForm.toString());
+
+        return headForm;
     }
 }

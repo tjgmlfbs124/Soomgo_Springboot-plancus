@@ -27,6 +27,25 @@ class Service{
     })
   }
 
+  requestPlanToMember(planHelper, callback){
+    const title = $("input[name=title]").val();
+    const color = $("select[name=color]").val();
+    const local = $("input[name=local]").val();
+    let formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("color", color);
+    formData.append("limitedDays", planHelper.limitDays);
+    formData.append("memberIds", planHelper.members);
+    formData.append("local", local);
+    formData.append("useTimes", planHelper.availableDays);
+
+    this.restfulApi.postAPI("/plan/request", formData, function(result){
+      var json = JSON.parse(result);
+      callback(json);
+    })
+  }
+
   /**
    * 최적화 일정 조회
    * @param  {[type]}   planHelper [선택한 일정설정이 담겨있는 오브젝트]

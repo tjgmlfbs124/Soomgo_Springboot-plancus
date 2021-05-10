@@ -56,7 +56,7 @@ public class Plan {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PLAN_FILTER")
-    private PlanFilter filter;
+    private PlanFilterHead filter;
 
     public String toJsonString(){
         return "{" +

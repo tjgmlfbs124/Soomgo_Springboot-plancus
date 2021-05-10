@@ -20,14 +20,14 @@ public class PlanController {
 
     private final MemberService memberService;
 
-    @GetMapping("/plan/new")
+    @GetMapping("/plan/request")
     public String onPageSavePlan(Model model, HttpSession httpSession){
         if ((Member)httpSession.getAttribute("member") == null){
             return "redirect:/";
         }
         else{
             model.addAttribute("members",memberService.findAll());
-            return "/plan/new";
+            return "/plan/request";
         }
     }
 }
