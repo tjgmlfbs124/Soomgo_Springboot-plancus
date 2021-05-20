@@ -1,24 +1,28 @@
 package com.milestone.plancus.Domain;
 
 import lombok.Getter;
-import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity(name ="pf_detail")
+@Entity(name ="PF_DETAIL")
 @Getter
 public class PlanFilterDetail {
     public PlanFilterDetail() {
     }
 
-    public PlanFilterDetail(PlanFilterHead headId, Member member, Member host, LocalDateTime useStartTime, LocalDateTime useEndTime, LocalDateTime createByDate, Boolean isRead) {
+    public PlanFilterDetail(PlanFilterHead headId, Member member,  Boolean isRead) {
         this.headId = headId;
         this.member = member;
-        this.host = host;
-        this.useStartTime = useStartTime;
-        this.useEndTime = useEndTime;
-        this.createByDate = createByDate;
+        this.isRead = isRead;
+    }
+
+    public PlanFilterDetail(Long id, PlanFilterHead headId, Member member, Boolean isRead) {
+        this.id = id;
+        this.headId = headId;
+        this.member = member;
         this.isRead = isRead;
     }
 
@@ -35,15 +39,8 @@ public class PlanFilterDetail {
     @JoinColumn(name="PFD_MEM_ID")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PFD_HOST_ID")
-    private Member host;
-
-    @Column(name = "PFD_STIME",  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime useStartTime;
-
-    @Column(name = "PFD_ETIME",  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime useEndTime;
+    @OneToMany(mappedBy = "detail", cascade = CascadeType.ALL)
+    private List<PlanFilterAvailableTimes> availableUseTimes = new ArrayList<>();
 
     @Column(name = "PFD_CREATEBYDATE", insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createByDate;
@@ -54,7 +51,33 @@ public class PlanFilterDetail {
     @Column(name = "PFD_ISREAD")
     private Boolean isRead;
 
+    public Boolean changeIsRead(Boolean isRead){
+        this.isRead = isRead;
 
+        return this.isRead;
+    }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":\"" + id + "\"" +
+                ", \"member\":" + member.toJson() +
+                ", \"memberUseTimes\":" + availableUseTimes +
+                ", \"createByDate\":\"" + createByDate + "\""+
+                ", \"updateByDate\":\"" + updateByDate  + "\""+
+                ", \"isRead\":\"" + isRead  + "\""+
+                '}';
+    }
+
+    public String toJson(){
+        return "{" +
+                "\"id\":\"" + id + "\"" +
+                ", \"member\":" + member.toJson() +
+                ", \"memberUseTimes\":" + availableUseTimes +
+                ", \"createByDate\":\"" + createByDate + "\""+
+                ", \"updateByDate\":\"" + updateByDate  + "\""+
+                ", \"isRead\":\"" + isRead  + "\""+
+                '}';
+    }
 
 }

@@ -21,4 +21,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("select m from Member m where member_id = :memberId and member_pw = :memberPw")
     List<Member> findMemberByLogIdWithPw(@Param("memberId") String memberId, @Param("memberPw") String memberPw);
+
+    @Query(value="SELECT * FROM MEMBER LEFT JOIN PF_DETAIL ON MEMBER.MEM_ID = PF_DETAIL.PFD_MEM_ID WHERE PF_DETAIL.PFH_ID=:headId", nativeQuery=true)
+    List<Member> findMemberByDetail(@Param("headId") Long headId);
 }

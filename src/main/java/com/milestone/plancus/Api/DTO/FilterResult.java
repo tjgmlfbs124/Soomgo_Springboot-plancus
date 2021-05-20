@@ -1,6 +1,5 @@
 package com.milestone.plancus.Api.DTO;
 
-import com.milestone.plancus.Domain.Member;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -35,14 +34,14 @@ public class FilterResult {
     private LocalDateTime filterStartTime;
     private LocalDateTime filterEndTime;
 
-    private MemberDTO host;
-    private List<MemberDTO> joinMembers = new ArrayList<>();
+    private MemberDto host;
+    private List<MemberDto> joinMembers = new ArrayList<>();
 
     private List<Long> availableDaysIndexs = new ArrayList<>();
 
     private List<Attendance> result = new ArrayList<>();
 
-    public void addJoinMembers(MemberDTO memberDTO){
+    public void addJoinMembers(MemberDto memberDTO){
         if (!this.joinMembers.contains(memberDTO)){
             this.joinMembers.add(memberDTO);
         }

@@ -142,6 +142,7 @@
 [dir=ltr] .select2-container--bootstrap4 .select2-selection--multiple {
   height: auto;
   min-height: calc(2.40625rem + 2px);
+  background: #fff;
 }
 
 [dir=ltr] .select2-container--bootstrap4 .select2-selection--multiple .select2-selection__rendered {

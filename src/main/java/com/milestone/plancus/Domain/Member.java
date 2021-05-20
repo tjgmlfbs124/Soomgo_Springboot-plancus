@@ -1,12 +1,13 @@
 package com.milestone.plancus.Domain;
 
-import com.milestone.plancus.Api.DTO.MemberDTO;
+import com.milestone.plancus.Api.DTO.MemberDto;
 import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -45,21 +46,40 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Plan> plans = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<PlanFilterDetail> details = new ArrayList<>();
+
     @Column(name = "MEM_CREATEBYDATE", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createByDate;
 
     @Column(name = "MEM_UPDATEBYDATE", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updateByDate;
 
-    public MemberDTO toMemberDTO(){
-        return new MemberDTO(
+    public MemberDto toDto(){
+        return new MemberDto(
                 this.getMember_id(),
                 this.getMember_name(),
                 this.getMember_role(),
                 this.getMember_initial()
         );
     }
-    public String toJsonString(){
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Member member = (Member) o;
+
+        System.out.println(Objects.equals(member_id, member.member_id) && Objects.equals(member_pw, member.member_pw) && Objects.equals(member_name, member.member_name));
+        return Objects.equals(member_id, member.member_id) && Objects.equals(member_pw, member.member_pw) && Objects.equals(member_name, member.member_name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(member_id, member_pw, member_name);
+    }
+
+    public String toJson(){
         return "{" +
                 "\"id\":\"" + id + "\"" +
                 ", \"member_id\":\"" + member_id  + "\"" +
@@ -67,7 +87,6 @@ public class Member {
                 ", \"member_name\":\"" + member_name + "\""+
                 ", \"member_role\":\"" + member_role  + "\""+
                 ", \"member_initial\":\"" + member_initial  + "\""+
-                ", \"member_role\":\"" + member_role  + "\""+
                 ", \"createByDate\":\"" + createByDate  + "\""+
                 ", \"updateByDate\":\"" + updateByDate  + "\""+
                 '}';
@@ -82,7 +101,6 @@ public class Member {
                 ", \"member_name\":\"" + member_name + "\""+
                 ", \"member_role\":\"" + member_role  + "\""+
                 ", \"member_initial\":\"" + member_initial  + "\""+
-                ", \"member_role\":\"" + member_role  + "\""+
                 ", \"createByDate\":\"" + createByDate  + "\""+
                 ", \"updateByDate\":\"" + updateByDate  + "\""+
                 '}';

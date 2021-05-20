@@ -1,0 +1,155 @@
+<div id="modal-select-days" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-date-title" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="modal-date-title">일별 선택</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <!-- // END .modal-header -->
+         <div class="modal-body">
+            <div class="card">
+               <div class="card-body">
+                  <label class="text-label" for="modal_periodDate">Date</label>
+                  <input id="modal_periodDate" type="text" class="form-control" placeholder="Flatpickr example" data-toggle="flatpickr" value="today">
+               </div>
+            </div>
+         </div>
+         <!-- // END .modal-body -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="selectDays()">Save changes</button>
+         </div>
+         <!-- // END .modal-footer -->
+      </div>
+      <!-- // END .modal-content -->
+   </div>
+   <!-- // END .modal-dialog -->
+</div>
+
+<div id="modal-select-weeks" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-date-title" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="modal-date-title">주별 선택</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <!-- // END .modal-header -->
+         <div class="modal-body">
+            <div class="card">
+               <div class="card-body">
+                  <label class="text-label" for="modal_periodDate">Date</label>
+                  <input id="modal_periodWeeks" type="text" class="form-control" placeholder="Flatpickr example" data-toggle="flatpickr" value="today">
+               </div>
+            </div>
+         </div>
+         <!-- // END .modal-body -->
+         <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="selectWeeks()">Save changes</button>
+         </div>
+         <!-- // END .modal-footer -->
+      </div>
+      <!-- // END .modal-content -->
+   </div>
+   <!-- // END .modal-dialog -->
+</div>
+
+<div id="modal-select-month" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-date-title" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="modal-date-title">월별 선택</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <!-- // END .modal-header -->
+         <div class="modal-body">
+            <div class="card">
+               <div class="card-body">
+                 <table class="table mb-0 thead-border-top-0">
+                    <tbody class="list" id="staff">
+                       <tr>
+                         <td class="month" onclick="selectMonth(1)"><span>1월</span></td>
+                         <td class="month" onclick="selectMonth(2)"><span>2월</span></td>
+                         <td class="month" onclick="selectMonth(3)"><span>3월</span></td>
+                       </tr>
+                        <tr>
+                          <td class="month" onclick="selectMonth(4)"><span>4월</span></td>
+                          <td class="month" onclick="selectMonth(5)"><span>5월</span></td>
+                          <td class="month" onclick="selectMonth(6)"><span>6월</span></td>
+                        </tr>
+                         <tr>
+                           <td class="month" onclick="selectMonth(7)"><span>7월</span></td>
+                           <td class="month" onclick="selectMonth(8)"><span>8월</span></td>
+                           <td class="month" onclick="selectMonth(9)"><span>9월</span></td>
+                         </tr>
+                          <tr>
+                            <td class="month" onclick="selectMonth(10)"><span>10월</span></td>
+                            <td class="month" onclick="selectMonth(11)"><span>11월</span></td>
+                            <td class="month" onclick="selectMonth(12)"><span>12월</span></td>
+                          </tr>
+                    </tbody>
+                 </table>
+               </div>
+            </div>
+         </div>
+         <!-- // END .modal-footer -->
+      </div>
+      <!-- // END .modal-content -->
+   </div>
+   <!-- // END .modal-dialog -->
+</div>
+
+
+<script>
+  function selectDays() {
+    var selectDate = $("#modal_periodDate").val();
+    onClickDate(null, selectDate+"T00:00:00", selectDate+"T00:00:00");
+  }
+
+
+  function selectWeeks() {
+    var selectDate = $("#modal_periodWeeks").val() + "T00:00:00";
+    var selectDateToDate = new Date($("#modal_periodWeeks").val() + "T00:00:00");
+    var weekAgoDate = date_to_str(selectDateToDate.setDate(selectDateToDate.getDate() - 7));
+
+    onClickDate(null, weekAgoDate, selectDate);
+  }
+
+  function selectMonth(selectMonth) {
+    var year = new Date().getFullYear();
+    var month = Number(selectMonth) < 10 ? '0' + selectMonth : '' + selectMonth;
+    var startDays = "01";
+    var lastDays = new Date(year, selectMonth, 0).getDate();
+
+    var startDate = year + "-" + month + "-" + startDays + "T00:00:00";
+    var endDate = year + "-" + month + "-" + lastDays + "T00:00:00";
+
+    $("#modal-select-month").modal('hide');
+
+    onClickDate(null, startDate, endDate);
+  }
+
+  function date_to_str(format){
+    if(typeof(format) != "object") format = new Date(format);
+    var year = format.getFullYear();
+    var month = format.getselectMonth() + 1;
+    var date = format.getDate();
+    var hour = format.getHours();
+    var min = format.getMinutes();
+    var sec = format.getSeconds();
+
+    if(month<10) month = '0' + month;
+    if(date<10) date = '0' + date;
+    if(hour<10) hour = '0' + hour;
+    if(min<10) min = '0' + min;
+    if(sec<10) sec = '0' + sec;
+
+    return year + "-" + month + "-" + date + "T" + hour + ":" + min + ":" + sec;
+  }
+</script>

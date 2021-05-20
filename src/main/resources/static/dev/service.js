@@ -27,23 +27,89 @@ class Service{
     })
   }
 
-  requestPlanToMember(planHelper, callback){
+  /**
+   * 참석자들에게 일정 공유신청
+   * @param  {[type]}   planHelper [선택한 일정설정이 담겨있는 오브젝트]
+   * @param  {Function} callback   [서버로부터 응답받은 값을 Callback 처리]
+   */
+  requestPlanToMember(planHelper, todoList, callback){
     const title = $("input[name=title]").val();
     const color = $("select[name=color]").val();
-    const local = $("input[name=local]").val();
     let formData = new FormData();
 
     formData.append("title", title);
     formData.append("color", color);
     formData.append("limitedDays", planHelper.limitDays);
     formData.append("memberIds", planHelper.members);
-    formData.append("local", local);
-    formData.append("useTimes", planHelper.availableDays);
+    formData.append("mapName", planHelper.map.name);
+    formData.append("mapAddress", planHelper.map.address);
+    formData.append("mapLon", planHelper.map.lon);
+    formData.append("mapLat", planHelper.map.lat);
+    formData.append("useTimes", planHelper.useTimes);
+    formData.append("todoList", todoList);
 
     this.restfulApi.postAPI("/plan/request", formData, function(result){
       var json = JSON.parse(result);
       callback(json);
     })
+  }
+   /**
+    * 개인 일정 추가
+    * @param  {String}      title           일정 제목
+    * @param  {String}      color           일정 태그
+    * @param  {String}      local           일정 장소
+    * @param  {new Date()}  startDate       일정 시작시간
+    * @param  {new Date()}  endDate         일정 종료시간
+    * @param  {Array}       todoList        투두리스트
+    * @param  {Function}    callback        [서버로부터 응답받은 값을 Callback 처리]
+    */
+  addPlan(title, color,  local, startDate, endDate, todoList, callback){
+    let formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("color", color);
+    formData.append("mapName", planHelper.map.name);
+    formData.append("mapAddress", planHelper.map.address);
+    formData.append("mapLon", planHelper.map.lon);
+    formData.append("mapLat", planHelper.map.lat);
+    formData.append("startTime", startDate);
+    formData.append("endTime", endDate);
+    formData.append("todoList", todoList);
+
+    this.restfulApi.postAPI("/plan/add", formData, function(result){
+      var json = JSON.parse(result);
+      callback(json);
+    });
+  }
+
+  /**
+   * detail에 대한 상세정보 요청
+   * @param  {[type]}   id       head Id
+   * @param  {Function} callback   [서버로부터 응답받은 값을 Callback 처리]
+   */
+  getDetail(id, callback){
+    this.restfulApi.getAPI("/plan/detailToJson?id=" + id, null, function(result){
+      var json = JSON.parse(result);
+      callback(json);
+    })
+  }
+
+  /**
+   * 신청온 일정에 대한 시간설정
+   * @param  {[type]}   planHelper [선택한 일정설정이 담겨있는 오브젝트]
+   * @param  {Function} callback   [서버로부터 응답받은 값을 Callback 처리]
+   */
+  joinPlan(headId, planHelper, callback){
+    var obj = {
+        'headId' : headId,
+        'availableTimes' : planHelper.availableTimes
+    }
+
+    this.restfulApi.postApiToJson("/plan/join", obj, function(result){
+      var json = JSON.parse(result);
+      callback(json);
+    })
+
   }
 
   /**
@@ -52,53 +118,24 @@ class Service{
    * @param  {Function} callback   [서버로부터 응답받은 값을 Callback 처리]
    * @return {[type]}              [서버로부터 응답받은 값을 json으로 return]
    */
-  findAvaiablePlan(planHelper, callback){
-    const title = $("input[name=title]").val();
-    const color = $("select[name=color]").val();
-    const local = $("input[name=local]").val();
-    let formData = new FormData();
-
-    formData.append("title", title);
-    formData.append("color", color);
-    formData.append("limitedDays", planHelper.limitDays);
-    formData.append("memberIds", planHelper.members);
-    formData.append("local", local);
-    formData.append("availableStartTime", planHelper.availableStartTime);
-    formData.append("availableEndTime", planHelper.availableEndTime);
-    formData.append("availableDaysIndex", planHelper.availableDays);
-
-    this.restfulApi.postAPI("/findPlan", formData, function(result){
-      var json = JSON.parse(result);
-      callback(json);
-    })
-  }
+   findAvaiablePlan(id, callback){
+     this.restfulApi.getAPI("/plan/confirm/find?id=" + id, null, function(result){
+       var json = JSON.parse(result);
+       callback(json);
+     })
+   }
 
   /**
    * 일정 저장
    * @param  {Function} callback [서버로부터 응답받은 값을 Callback 처리]
    */
- submitPlan(callback){
+ confirmPlan(headId, filterHelper, callback){
    let formData = new FormData();
-   const joinMemberIds = (filterHelper.filter.joinMembers).map(x=>x.member_id);
-   const positiveMembersIds =  ((filterHelper.selectFilter).positiveMembers).map(x=>x.member_id);
+   formData.append("headId", headId);
+   formData.append("startTime", filterHelper.selectStartDate);
+   formData.append("endTime", filterHelper.selectEndDate);
 
-   console.log("filterHelper : " , filterHelper);
-
-   formData.append("planTitle", filterHelper.filter.planTitle);
-   formData.append("color", filterHelper.filter.color);
-   formData.append("local", filterHelper.filter.local);
-   formData.append("hostId", filterHelper.filter.host.member_id);
-   formData.append("joinMemberIds", joinMemberIds);
-   formData.append("positiveMemberIds", positiveMembersIds);
-   formData.append("selectDate",((filterHelper.selectFilter).date));
-   formData.append("startDate", filterHelper.filter.startDate);
-   formData.append("endDate", filterHelper.filter.endDate);
-   formData.append("filterEndTime", filterHelper.filter.filterEndTime);
-   formData.append("filterStartTime", filterHelper.filter.filterStartTime);
-   formData.append("result", filterHelper.selectFilter);
-   formData.append("availableDaysIndexs", filterHelper.filter.availableDaysIndexs);
-
-   this.restfulApi.postAPI("/plan/submitPlan", formData, function(result){
+   this.restfulApi.postAPI("/plan/confirm", formData, function(result){
      var json = JSON.parse(result);
      callback(json);
    });
@@ -111,5 +148,28 @@ class Service{
     });
  }
 
+/**
+ * 로그인한 멤버의 정해진 기간안에 각 태그별 통계를 요청
+ * @param  {[type]}   startDate [검색 시작날짜]
+ * @param  {[type]}   endDate   [검색 종료날짜]
+ * @param  {Function} callback  [서버로부터 응답받은 값을 Callback 처리]
+ * @return {[type]}             [description]
+ */
+ findTagChartDataByMember(startDate, endDate, callback){
+    this.restfulApi.getAPI("/plan/tags?startDate="+startDate+"&endDate="+endDate, null, function(result){
+      var json = JSON.parse(result);
+      callback(json);
+    });
+ }
 
+ updateTodoList(planId, todolist, callback){
+    let formData = new FormData();
+    formData.append("planId", planId);
+    formData.append("todoList", todolist);
+
+    this.restfulApi.postAPI("/todoList/update", formData, function(result){
+      var json = JSON.parse(result);
+      callback(json);
+    });
+ }
 }

@@ -1,22 +1,82 @@
 <!-- // END drawer-layout__content -->
-<div class="mdk-drawer js-mdk-drawer" id="default-drawer" data-align="start">
+<div class="mdk-drawer js-mdk-drawer" id="default-drawer" data-align="start" style=" font-family: 'noto_bold';">
    <div class="mdk-drawer__content">
       <div class="sidebar sidebar-light sidebar-left sidebar-p-t" data-perfect-scrollbar>
-         <div class="sidebar-heading">Menu</div>
          <ul class="sidebar-menu">
             <li class="sidebar-menu-item"  onclick="location.href='/'" style="cursor:pointer;">
                <a class="sidebar-menu-button" data-toggle="collapse">
-                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">event_available</i>
-                 <span class="sidebar-menu-text">Calender</span>
+               <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">event_available</i>
+               <span class="sidebar-menu-text" style="color:#5478B5;">캘린더</span>
                </a>
             </li>
-             <li class="sidebar-menu-item" onclick="location.href='/signout'" style="cursor:pointer;">
-                <a class="sidebar-menu-button" data-toggle="collapse">
-                  <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">person</i>
-                  <span class="sidebar-menu-text">Logout</span>
-                </a>
-             </li>
+            <li class="sidebar-menu-item" onclick="location.href='/plan/public/list'" style="cursor:pointer;">
+               <a class="sidebar-menu-button" data-toggle="collapse">
+                  <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">notifications</i>
+                  <span class="sidebar-menu-text" style="color:#5478B5;" >알람 모아보기</span>
+                  <span class="badge badge-primary ml-auto" th:if="${isReadCount} > 0 ">NEW</span>
+                  <!-- <span class="badge badge-primary ml-auto" th:if="${isReadCount} > 0 ">NEW</span> -->
+               </a>
+            </li>
+            <li class="sidebar-menu-item" onclick="location.href='/todo/list'" style="cursor:pointer;">
+               <a class="sidebar-menu-button" data-toggle="collapse">
+                  <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">done</i>
+                  <span class="sidebar-menu-text" style="color:#5478B5;">투두리스트</span>
+               </a>
+            </li>
+            <li class="sidebar-menu-item" onclick="location.href='/plan/list'" style="cursor:pointer;">
+               <a class="sidebar-menu-button" data-toggle="collapse">
+                  <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">format_list_bulleted</i>
+                  <span class="sidebar-menu-text" style="color:#5478B5;">모든 일정</span>
+               </a>
+            </li>
+            <li class="sidebar-menu-item" onclick="location.href='/plan/chart'" style="cursor:pointer;">
+               <a class="sidebar-menu-button" data-toggle="collapse">
+               <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">pie_chart_outlined</i>
+               <span class="sidebar-menu-text" style="color:#5478B5;">일정통계</span>
+               </a>
+            </li>
          </ul>
+
+         <div class="sidebar-p-a sidebar-b-y">
+            <div class="sidebar-heading">태그</div>
+            <ul class="sidebar-menu">
+               <li class="sidebar-menu-item"  onclick="location.href='/'" style="cursor:pointer;">
+                  <a class="sidebar-menu-button" data-toggle="collapse">
+                  <span class="sidebar-menu-text">주업무</span>
+                  </a>
+               </li>
+               <li class="sidebar-menu-item" onclick="location.href='/plan/public/list'" style="cursor:pointer;">
+                  <a class="sidebar-menu-button" data-toggle="collapse">
+                  <span class="sidebar-menu-text">부업무</span>
+                  </a>
+               </li>
+               <li class="sidebar-menu-item" onclick="location.href='/plan/public/list'" style="cursor:pointer;">
+                  <a class="sidebar-menu-button" data-toggle="collapse">
+                  <span class="sidebar-menu-text">자기계발</span>
+                  </a>
+               </li>
+               <li class="sidebar-menu-item" onclick="location.href='/signout'" style="cursor:pointer;">
+                  <a class="sidebar-menu-button" data-toggle="collapse">
+                  <span class="sidebar-menu-text">가족</span>
+                  </a>
+               </li>
+               <li class="sidebar-menu-item" onclick="location.href='/signout'" style="cursor:pointer;">
+                  <a class="sidebar-menu-button" data-toggle="collapse">
+                  <span class="sidebar-menu-text">인맥관리</span>
+                  </a>
+               </li>
+               <li class="sidebar-menu-item" onclick="location.href='/signout'" style="cursor:pointer;">
+                  <a class="sidebar-menu-button" data-toggle="collapse">
+                  <span class="sidebar-menu-text">친구, 지인</span>
+                  </a>
+               </li>
+               <li class="sidebar-menu-item" onclick="location.href='/signout'" style="cursor:pointer;">
+                  <a class="sidebar-menu-button" data-toggle="collapse">
+                  <span class="sidebar-menu-text">기타, 이동</span>
+                  </a>
+               </li>
+            </ul>
+         </div>
       </div>
    </div>
 </div>

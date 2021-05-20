@@ -1,7 +1,7 @@
 package com.milestone.plancus.Service;
 
-import com.milestone.plancus.Api.DTO.MemberDTO;
-import com.milestone.plancus.Api.Form.SigninMemberForm;
+import com.milestone.plancus.Api.DTO.MemberDto;
+import com.milestone.plancus.Api.RequestForm.SigninMemberForm;
 import com.milestone.plancus.Domain.Member;
 import com.milestone.plancus.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,23 +16,23 @@ import java.util.stream.Collectors;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    public List<MemberDTO> findAll(){
+    public List<MemberDto> findAll(){
         List<Member> findMembers = memberRepository.findAll();
-        List<MemberDTO> memberToDtos = findMembers.stream().map(
-                o -> new MemberDTO(o.getMember_id(), o.getMember_name(), o.getMember_role(), o.getMember_initial())
+        List<MemberDto> memberToDtos = findMembers.stream().map(
+                o -> new MemberDto(o.getMember_id(), o.getMember_name(), o.getMember_role(), o.getMember_initial())
         ).collect(Collectors.toList());
 
         return memberToDtos;
     }
 
     /** 회원 가입 **/
-    public List<MemberDTO> save(Member member){
-        List<MemberDTO> resultMembers = new ArrayList<>();
+    public List<MemberDto> save(Member member){
+        List<MemberDto> resultMembers = new ArrayList<>();
 
         if (!isValidateMember(member)){
             Member saveMember = memberRepository.save(member);
 
-            resultMembers.add(new MemberDTO(saveMember.getMember_id(), saveMember.getMember_name(), saveMember.getMember_role(), saveMember.getMember_initial()));
+            resultMembers.add(new MemberDto(saveMember.getMember_id(), saveMember.getMember_name(), saveMember.getMember_role(), saveMember.getMember_initial()));
         }
         return resultMembers;
     }

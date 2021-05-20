@@ -1,24 +1,18 @@
 package com.milestone.plancus.Service;
 
-import com.milestone.plancus.Api.DTO.Attendance;
-import com.milestone.plancus.Api.DTO.FilterResult;
-import com.milestone.plancus.Api.DTO.MemberDTO;
-import com.milestone.plancus.Api.DTO.PlanDTO;
-import com.milestone.plancus.Api.Form.FindPlanForm;
-import com.milestone.plancus.Api.Form.SavePlanForm;
-import com.milestone.plancus.Domain.Member;
-import com.milestone.plancus.Domain.Plan;
-import com.milestone.plancus.Repository.MemberRepository;
+import com.milestone.plancus.Api.DTO.*;
+import com.milestone.plancus.Api.ResponseForm.TagsListResponse;
+import com.milestone.plancus.Domain.*;
+import com.milestone.plancus.Repository.MapRespository;
+import com.milestone.plancus.Repository.PlanFilterDetailRepository;
+import com.milestone.plancus.Repository.PlanFilterHeadRepository;
 import com.milestone.plancus.Repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.Filter;
-import javax.servlet.http.HttpSession;
+import javax.persistence.EntityManager;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -28,128 +22,129 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PlanService {
 
-    private final MemberRepository memberRepository;
+    private final PlanFilterHeadRepository headRepository;
     private final PlanRepository planRepository;
+    private final PlanFilterDetailRepository detailRepository;
+    private final MapRespository mapRespository;
+    private final EntityManager em;
 
-    public FilterResult findAvailablePlanByMember(FindPlanForm form, Member host) throws ParseException {
-        FilterResult filterResult = new FilterResult(
-                form.getTitle(),
-                form.getColor(),
-                form.getLocal(),
-                LocalDate.now(),
-                form.getLimitedDays().toLocalDate(),
-                LocalDateTime.of(LocalDate.now(),LocalTime.parse(form.getAvailableStartTime())),
-                LocalDateTime.of(LocalDate.now(),LocalTime.parse(form.getAvailableEndTime())),
-                form.getAvailableDaysIndex());
+    @Transactional(readOnly = false)
+    public Plan save(Plan plan){
 
-        filterResult.setHost(host.toMemberDTO());
-
-        LocalDate startSearchDate = LocalDate.from(LocalDateTime.now());            // 검색 시작날짜
-
-        LocalDate limtedSearchDate = LocalDate.from(form.getLimitedDays()).plusDays(1L);   // 검색 종료날짜
-
-        LocalTime availableStartTime = LocalTime.parse(form.getAvailableStartTime()); // 요구한 일정 시작시간
-
-        LocalTime availableEndTime = LocalTime.parse(form.getAvailableEndTime());     // 요구한 일정 종료시간
-
-        // 오늘부터 설정한 기간까지 하루씩 가능한 시간이 있는지 체크
-        while(!startSearchDate.isEqual(limtedSearchDate)){
-            System.out.println("availableEndTime = " + startSearchDate.toString());
-            Attendance attendance = new Attendance();
-            attendance.setDate(startSearchDate);
-
-            // 참석자에 한하여 하루씩 스케줄을 가져와서 비교
-            for (String memberId : form.getMemberIds()) {
-
-                Member member = memberRepository.findMemberByLogId(memberId).stream().findFirst().get(); // 참석자
-
-                LocalDateTime startSearchDateTime = LocalDateTime.of(startSearchDate,availableStartTime);  // 요구한 일정 시작시간 [LocalDateTime]
-
-                LocalDateTime endSearchDateTime = LocalDateTime.of(startSearchDate,availableEndTime);      // 요구한 일정 종료시간 [LocalDateTime]
-
-                // 하루씩 증가하는 검색날짜안에서 요구한 일정시간이 되는지 찾아본다. (collect 값이 있으면 불가능, 없으면 가능)
-                List<Plan> collect = member.getPlans().stream().filter(
-                        dates -> !(
-                                (startSearchDateTime.isBefore(dates.getStartTime()) && endSearchDateTime.isBefore(dates.getStartTime())) ||
-                                (startSearchDateTime.isAfter(dates.getEndTime()) && endSearchDateTime.isAfter(dates.getEndTime()))
-                        )
-                ).collect(Collectors.toList());
-
-                String isJoin = collect.size() > 0 ? "불가능" : "가능";
+        return planRepository.save(plan);
+    }
 
 
-//                System.out.println("\n" + member.getMember_name() + "님 " + startSearchDate.toString() +" [" + isJoin+ "]\n");
+    @Transactional(readOnly = false)
+    public List<Plan> savePlanByHead(Long headId){
 
-                if (collect.size() > 0){
-                    attendance.addNegativeMember(member);
-                }
-                else{
-                    attendance.addPositiveMember(member);
-                }
-                filterResult.addJoinMembers(member.toMemberDTO());
-            }
+        List<Plan> savePlans = new ArrayList<>();
 
-            filterResult.addResult(attendance);
+        PlanFilterHead findHead = headRepository.findById(headId).stream().findAny().get();
 
-            startSearchDate = startSearchDate.plusDays(1L);
+        for (PlanFilterDetail detail : findHead.getDetails()) {
+            Plan savePlan = planRepository.save(new Plan(
+                    findHead.getTitle(),
+                    findHead.getColor(),
+                    detail.getMember(),
+                    findHead.getHost(),
+                    findHead.getConfirmStartDate(),
+                    findHead.getConfirmEndDate()
+            ));
+            savePlans.add(savePlan);
         }
 
-        return filterResult;
+        return savePlans;
     }
+
+    public List<Plan> findAllDetailByHeadWithMember(Member member, LocalDateTime dateTime){
+
+        return planRepository.findPlansByMemberWithDate(member.getId(), dateTime);
+    }
+
+
 
     public void print(){
 
     }
 
-    public List<Long> savePlan(SavePlanForm form){
-
-        ArrayList<Long> planIds = new ArrayList<>();
-
-        LocalDateTime startTime = LocalDateTime.of(
-                form.getSelectDate(),
-                form.getFilterStartTime().toLocalTime()
-        );
-
-        LocalDateTime endTime = LocalDateTime.of(
-                form.getSelectDate(),
-                form.getFilterEndTime().toLocalTime()
-        );
-
-        Member host = memberRepository.findMemberByLogId(form.getHostId()).stream().findFirst().get();
-
-        for (String positiveMemberId : form.getPositiveMemberIds()) {
-            Member member = memberRepository.findMemberByLogId(positiveMemberId).stream().findFirst().get();
-
-            Plan plan = new Plan(
-                    form.getPlanTitle(),
-                    form.getColor(),
-                    form.getLocal(),
-                    member,
-                    host,
-                    startTime,
-                    endTime);
-
-            planIds.add(planRepository.save(plan).getId());
-        }
-
-        return planIds;
-    }
-
-    public List<PlanDTO> findPlanByMember(Member member){
+    @Transactional(readOnly = true)
+    public List<Plan> findPlanByMember(Member member) {
         Long id = member.getId();
 
-        return planRepository.findPlansByMemberOrderByUpdateDate(id).stream().map(
-                o -> new PlanDTO(
-                        o.getId(),
-                        o.getTitle(),
-                        o.getColor(),
-                        o.getLocal(),
-                        o.getHost().toMemberDTO(),
-                        o.getStartTime(),
-                        o.getEndTime()
-                )
-        ).collect(Collectors.toList());
+        return planRepository.findPlanByMember(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Plan> findPlanByIdWithMember(Long planId,Member member) {
+        Long id = member.getId();
+
+        return planRepository.findPlanByIdWithMember(planId, member.getId());
+    }
+
+    public TagsListResponse findPlanTagsByMemeber(Member member, LocalDateTime startDate, LocalDateTime endDate){
+        Long id = member.getId();
+        LocalDateTime startDateTime = LocalDateTime.of(startDate.toLocalDate(), LocalTime.of(0,0));
+        LocalDateTime endDateTime = LocalDateTime.of(endDate.toLocalDate(), LocalTime.of(23,59));
+
+        List<Plan> plans =  planRepository.findPlansByMemberBetweenDate(member.getId(), startDateTime, endDateTime);
+
+        TagsListResponse tags = new TagsListResponse();
+        tags.setMain_business(new PlanTagDto("main-businiess"));
+        tags.setSub_business(new PlanTagDto("sub-businiess"));
+        tags.setDevelop(new PlanTagDto("friends"));
+        tags.setFamily(new PlanTagDto("family"));
+        tags.setFriend(new PlanTagDto("networking"));
+        tags.setNetwork(new PlanTagDto("develop"));
+        tags.setEtc(new PlanTagDto("etc"));
+
+        for (Plan plan : plans) {
+            // 일정일이 시작일과 종료이 같다 ? 카운트 시작 : 패스
+           if (plan.getStartTime().toLocalDate().equals(plan.getEndTime().toLocalDate())){
+               Duration duration = Duration.between(plan.getStartTime().toLocalTime(), plan.getEndTime().toLocalTime());
+
+               switch (plan.getColor()){
+                   case "main-business" :
+                       tags.getMain_business().addSecond(duration.getSeconds());
+                       break;
+                   case "sub-business" :
+                       tags.getSub_business().addSecond(duration.getSeconds());
+                       break;
+                   case "friends":
+                       tags.getFriend().addSecond(duration.getSeconds());
+                       break;
+                   case "family":
+                       tags.getFamily().addSecond(duration.getSeconds());
+                       break;
+                   case "develop":
+                       tags.getDevelop().addSecond(duration.getSeconds());
+                       break;
+                   case "networking":
+                       tags.getNetwork().addSecond(duration.getSeconds());
+                       break;
+                   case "etc":
+                       tags.getEtc().addSecond(duration.getSeconds());
+                       break;
+               }
+               tags.addTotalSecond(duration.getSeconds());
+            }
+        }
+
+        return tags;
+    }
+
+    public List<Plan> findPrevPlan(LocalDateTime nextDateTime, Member member){
+        LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0));
+        LocalDateTime end = nextDateTime;
+
+        List<Plan> prevPlans = planRepository.findAllPrevPlan(member.getId(), start, end);
+
+        System.out.println("prevPlans = " + prevPlans);
+
+        return prevPlans;
+
     }
 }

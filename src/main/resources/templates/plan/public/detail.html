@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th='http://www.thymeleaf.org' dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' >
+      <title>Calendar</title>
+      <!-- Prevent the demo from appearing in search engines -->
+      <meta name="robots" content="noindex">
+      <link type="text/css" href="/dev/font.css" rel="stylesheet">
+      <style>
+         .text-label, .modal-title{
+         font-family: 'noto_bold';
+         }
+         .js-lists-values-employee-name, .modal-body{
+         font-family: 'noto_demilight';
+         color:#303030;
+         }
+         .mdk-header-layout__content {
+         padding-top: 56px;
+         }
+      </style>
+      <!-- Perfect Scrollbar -->
+      <link type="text/css" href="/vendor/perfect-scrollbar.css" rel="stylesheet">
+      <!-- App CSS -->
+      <link type="text/css" href="/css/app.css" rel="stylesheet">
+      <link type="text/css" href="/css/app.rtl.css" rel="stylesheet">
+      <!-- Material Design Icons -->
+      <link type="text/css" href="/css/vendor-material-icons.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-material-icons.rtl.css" rel="stylesheet">
+      <!-- Font Awesome FREE Icons -->
+      <link type="text/css" href="/css/vendor-fontawesome-free.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-fontawesome-free.rtl.css" rel="stylesheet">
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133433427-1"></script>
+      <!-- Flatpickr -->
+      <link type="text/css" href="/css/vendor-flatpickr.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-flatpickr.rtl.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-flatpickr-airbnb.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-flatpickr-airbnb.rtl.css" rel="stylesheet">
+      <script>
+         window.dataLayer = window.dataLayer || [];
+
+         function gtag() {
+             dataLayer.push(arguments);
+         }
+         gtag('js', new Date());
+
+         gtag('config', 'UA-133433427-1');
+      </script>
+      <!-- FullCalendar -->
+      <link type="text/css" href="/vendor/fullcalendar/fullcalendar.min.css" rel="stylesheet">
+   </head>
+   <body class="layout-default">
+      <div class="preloader"></div>
+      <!-- Header Layout -->
+      <div class="mdk-header-layout js-mdk-header-layout">
+         <div th:replace="widget/header"></div>
+         <div class="mdk-header-layout__content" id="newFilterDocument">
+            <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+               <div class="mdk-drawer-layout__content page">
+                  <div class="container-fluid page__heading-container">
+                     <div class="page__heading d-flex align-items-center" style="margin-bottom:20px;">
+                        <div class="flex">
+                           <nav aria-label="breadcrumb" style="float:left">
+                              <ol class="breadcrumb mb-0">
+                                 <li class="breadcrumb-item"><a href="/"><i class="material-icons icon-20pt">home</i></a></li>
+                                 <li class="breadcrumb-item active" aria-current="page" style="cursor:pointer;"><a>일정필터</a></li>
+                              </ol>
+                           </nav>
+                           <h4 class="m-0" style="float:right; font-family: 'noto_bold';">일정 필터</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="container-fluid page__container">
+                   <div class="form-group" style="margin-bottom:1rem;">
+                      <label class="text-label" >정보</label>
+                      <label class="text-label" style="float:right; color:#6774DF" id="isJoin"></label>
+                      <div class="card card-form" style="border:none">
+                         <div class="row no-gutters">
+                            <div class="col-lg-12 card-form__body">
+                               <div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                                  <table class="table mb-0 thead-border-top-0">
+                                     <tbody class="list">
+                                        <tr>
+                                           <td>
+                                              <div class="media align-items-center">
+                                                 <div class="media-body" style="text-align:center;">
+                                                    <span class="js-lists-values-employee-name">요청 </span>
+                                                 </div>
+                                              </div>
+                                           </td>
+                                              <td>
+                                                 <div class="media align-items-center">
+                                                    <div class="media-body" style="text-align:center;">
+                                                       <span class="js-lists-values-employee-name" id="hostName"></span>
+                                                    </div>
+                                                 </div>
+                                              </td>
+                                        </tr>
+                                           <tr>
+                                              <td>
+                                                 <div class="media align-items-center">
+                                                    <div class="media-body" style="text-align:center;">
+                                                       <span class="js-lists-values-employee-name">장소 </span>
+                                                    </div>
+                                                 </div>
+                                              </td>
+                                                 <td >
+                                                    <div class="media align-items-center">
+                                                       <div class="media-body" style="text-align:center;">
+                                                          <span class="js-lists-values-employee-name" id="mapAddress"></span>
+                                                       </div>
+                                                    </div>
+                                                 </td>
+                                           </tr>
+                                     </tbody>
+                                  </table>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                    <div class="form-group" style="margin-bottom:2rem;">
+                       <label class="text-label" >참석자</label>
+                       <label class="text-label" style="float:right; color:#6774DF" id="isJoin"></label>
+                       <div class="card card-form" style="border:none">
+                          <div class="row no-gutters">
+                             <div class="col-lg-12 card-form__body">
+                                <div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                                   <table class="table mb-0 thead-border-top-0">
+                                      <tbody class="list">
+                                         <tr>
+                                            <td>
+                                               <div class="media align-items-center">
+                                                  <div class="media-body" style="text-align:center;">
+                                                     <span class="js-lists-values-employee-name" >참석자 투표현황</span>
+                                                  </div>
+                                               </div>
+                                            </td>
+                                            <td>
+                                               <div class="custom-control custom-checkbox" style="float:right;">
+                                                  <span class="js-lists-values-employee-name" id="joinMonitor">(0/5)</span>
+                                               </div>
+                                            </td>
+                                         </tr>
+                                      </tbody>
+                                   </table>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                     <div class="form-group" style="margin-bottom:1rem;">
+                        <label class="text-label" >가능한 시간 기준</label>
+                        <div class="card card-form" style="border:none">
+                           <div class="row no-gutters">
+                              <div class="col-lg-12 card-form__body">
+                                 <div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                                    <table class="table mb-0 thead-border-top-0">
+                                       <thead>
+                                          <tr>
+                                             <th style="width: 30px;" class="text-center">시간</th>
+                                             <th style="width: 18px;">
+                                             </th>
+                                          </tr>
+                                       </thead>
+                                       <tbody class="list" id="availableTimeTable">
+                                          <tr>
+                                             <td>
+                                                <div class="media align-items-center">
+                                                   <div class="media-body" style="text-align:center;">
+                                                      <span class="js-lists-values-employee-name" >아침 시간</span>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                             <td>
+                                                <div class="custom-control custom-checkbox" style="float:right;">
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row"  id="availabeTimes_1" style="border:1px">
+                                                   <label class="custom-control-label" for="availabeTimes_1" data-start="06:00" data-end="08:59"><span class="text-hide">Check</span></label>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="media align-items-center" style="text-align:center;">
+                                                   <div class="media-body">
+                                                      <span class="js-lists-values-employee-name">업무 시간</span>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                             <td>
+                                                <div class="custom-control custom-checkbox" style="float:right;">
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" id="availabeTimes_2">
+                                                   <label class="custom-control-label" for="availabeTimes_2" data-start="09:00" data-end="17:59"><span class="text-hide">Check</span></label>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>
+                                                <div class="media align-items-center" style="text-align:center;">
+                                                   <div class="media-body">
+                                                      <span class="js-lists-values-employee-name">저녁 시간</span>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                             <td>
+                                                <div class="custom-control custom-checkbox" style="float:right;">
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" id="availabeTimes_3">
+                                                   <label class="custom-control-label" for="availabeTimes_3" data-start="18:00" data-end="22:00"><span class="text-hide">Check</span></label>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="form-group" style="margin-bottom:2rem;">
+                        <label class="text-label">가능한 요일 기준</label>
+                        <div class="card card-form" style="border:none">
+                           <div class="row no-gutters">
+                              <div class="col-lg-12 card-form__body">
+                                 <div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                                    <table class="table mb-0 thead-border-top-0">
+                                       <thead>
+                                          <tr>
+                                             <th style="width: 30px;" class="text-center">요일 선택</th>
+                                             <th style="width: 18px;">
+                                             </th>
+                                          </tr>
+                                       </thead>
+                                       <tbody class="list" id="availableDaysTable">
+                                          <tr class="selected">
+                                             <td>
+                                                <div class="media align-items-center">
+                                                   <div class="media-body" style="text-align:center;">
+                                                      <span class="js-lists-values-employee-name" >월</span>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                             <td>
+                                                <div class="custom-control custom-checkbox" style="float:right;">
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" checked=""  id="monday" style="border:1px">
+                                                   <label class="custom-control-label" for="monday" data-index="2"><span class="text-hide">Check</span></label>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                          <tr class="selected">
+                                             <td>
+                                                <div class="media align-items-center" style="text-align:center;">
+                                                   <div class="media-body">
+                                                      <span class="js-lists-values-employee-name">화</span>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                             <td>
+                                                <div class="custom-control custom-checkbox" style="float:right;">
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="tuesday">
+                                                   <label class="custom-control-label" for="tuesday" data-index="3"><span class="text-hide">Check</span></label>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                          <tr class="selected">
+                                             <td>
+                                                <div class="media align-items-center" style="text-align:center;">
+                                                   <div class="media-body">
+                                                      <span class="js-lists-values-employee-name">수</span>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                             <td>
+                                                <div class="custom-control custom-checkbox" style="float:right;">
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="wednesday">
+                                                   <label class="custom-control-label" for="wednesday" data-index="4"><span class="text-hide">Check</span></label>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                          <tr class="selected">
+                                             <td>
+                                                <div class="media align-items-center" style="text-align:center;">
+                                                   <div class="media-body">
+                                                      <span class="js-lists-values-employee-name">목</span>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                             <td>
+                                                <div class="custom-control custom-checkbox" style="float:right;">
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="thursday">
+                                                   <label class="custom-control-label" for="thursday" data-index="5"><span class="text-hide">Check</span></label>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                          <tr class="selected">
+                                             <td>
+                                                <div class="media align-items-center" style="text-align:center;">
+                                                   <div class="media-body">
+                                                      <span class="js-lists-values-employee-name" data-index="6">금</span>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                             <td>
+                                                <div class="custom-control custom-checkbox" style="float:right;">
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="friday">
+                                                   <label class="custom-control-label" for="friday"><span class="text-hide">Check</span></label>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                          <tr class="selected">
+                                             <td>
+                                                <div class="media align-items-center" style="text-align:center;">
+                                                   <div class="media-body">
+                                                      <span class="js-lists-values-employee-name">토</span>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                             <td>
+                                                <div class="custom-control custom-checkbox" style="float:right;">
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="saturday">
+                                                   <label class="custom-control-label" for="saturday" data-index="7"><span class="text-hide">Check</span></label>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                          <tr class="selected">
+                                             <td>
+                                                <div class="media align-items-center" style="text-align:center;">
+                                                   <div class="media-body">
+                                                      <span class="js-lists-values-employee-name">일</span>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                             <td>
+                                                <div class="custom-control custom-checkbox" style="float:right;">
+                                                   <input type="checkbox" class="custom-control-input js-check-selected-row" checked="" id="sunday">
+                                                   <label class="custom-control-label" for="sunday" data-index="1"><span class="text-hide">Check</span></label>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <button class="btn btn-primary" onclick="onJoinPlan(this)" style="width:100%;" id="btn-update">변경</button><br>
+                     <button class="btn btn-primary" onclick="onJoinPlan(this)" style="width:100%;" id="btn-save">저장</button><br>
+                  </div>
+               </div>
+            </div>
+            <!-- // END drawer-layout -->
+         </div>
+      </div>
+      <div th:replace="widget/nav"></div>
+      <div th:replace="plan/modal"></div>
+      <!-- jQuery -->
+      <script src="/vendor/jquery.min.js"></script>
+      <!-- Bootstrap -->
+      <script src="/vendor/popper.min.js"></script>
+      <script src="/vendor/bootstrap.min.js"></script>
+      <!-- Perfect Scrollbar -->
+      <script src="/vendor/perfect-scrollbar.min.js"></script>
+      <!-- DOM Factory -->
+      <script src="/vendor/dom-factory.js"></script>
+      <!-- MDK -->
+      <script src="/vendor/material-design-kit.js"></script>
+      <!-- App -->
+      <script src="/js/toggle-check-all.js"></script>
+      <script src="/js/check-selected-row.js"></script>
+      <script src="/js/dropdown.js"></script>
+      <!-- <script src="/js/sidebar-mini.js"></script> -->
+      <script src="/js/app.js"></script>
+      <script src="/dev/calender.js"></script>
+      <!-- jQuery UI (for draggable) -->
+      <script src="/vendor/jquery-ui.min.js"></script>
+      <!-- Moment.js -->
+      <script src="/vendor/moment.min.js"></script>
+      <!-- Flatpickr -->
+      <script src="/vendor/flatpickr/flatpickr.min.js"></script>
+      <script src="/js/flatpickr.js"></script>
+      <script src="/dev/newEvnetListener.js"></script>
+      <script src="/dev/Calender/planHelper.js"></script>
+      <script src="/dev/Calender/FilterHelper.js"></script>
+      <script src="/dev/service.js"></script>
+      <script src="/dev/restfulApi.js"></script>
+      <script>
+         const headId = [[( ${#request.getParameter('id')} )]] ;
+         const memberId =  "[[${session.member.member_id}]]" ;
+
+         let planHelper = new PlanHelper();
+         let devService = new Service();
+
+         $(document).ready(function() {
+
+             for (var i = 0; i < 6; i++) { $("select[name=selectTimes-hour]").append("<option>" +  i + "</option>"); }
+             for (var i = 0; i < 51; i+=10) { $("select[name=selectTimes-minute]").append("<option>" +  i + "</option>"); }
+
+             // headid와 멤버에 맞는 일정의 투표 Detail을 가져옴
+             devService.getDetail(headId, function(result){
+               console.log("result : ", result);
+               const joinMembers = result.joinMembers;
+               const memberUseTime = result.memberUseTimes;
+               const planMembers = result.planMembers;
+               const isJoin = joinMembers.filter( m => m.member_id == memberId).length > 0 ? true : false;
+               const $rows = $("#availableTimeTable").children().toArray();
+
+               result.memberUseTimes.forEach((item, i) => {
+                   $rows.forEach((row, i) => {
+                     var $rowCheck = $(row).find("input[type='checkbox']");
+                     var $rowLabel = $(row).find(".custom-control-label");
+
+                     if (item.startTime == $rowLabel.data("start")){
+                       $(row).addClass("selected");
+                       $rowCheck.prop('checked', true);
+                     }
+                   });
+
+                  (planHelper.availableTimes).push({
+                    'start' : item.startTime,
+                    'end' : item.endTime
+                  })
+               });
+
+               if (isJoin == true) {
+                 $("#isJoin").text("투표완료");
+                 $("#btn-save").remove();
+               }
+               else{
+                 $("#btn-update").remove();
+               }
+
+
+               $("#joinMonitor").text("(" + joinMembers.length + "/" + planMembers.length + ")");
+               $("#hostName").text(result.host.member_name + "님")
+               $("#mapAddress").text(result.map.address);
+             });
+         });
+
+         function onJoinPlan(target){
+             if (planHelper.availableTimes.length <= 0) {
+               alert("가능한 시간을 선택해주세요.");
+               return;
+             }
+
+             devService.joinPlan(headId, planHelper, function(result){
+             if (result) {
+               alert("투표하였습니다.");
+               location.href="/plan/public/list";
+             }
+           });
+         }
+      </script>
+   </body>
+</html>

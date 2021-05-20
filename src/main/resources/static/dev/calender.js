@@ -15,8 +15,8 @@ class MyCalender{
       maxTime: '23:59:59',
       defaultView: period,
       handleWindowResize: true,
-      height: $(window).height() - 50,
-      contentHeight:550,
+      height: $(window).height() - 50 ,
+      contentHeight:400,
       header: {
         left: 'prev,next',
         center: 'title',

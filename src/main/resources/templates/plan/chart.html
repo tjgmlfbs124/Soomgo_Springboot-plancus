@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th='http://www.thymeleaf.org' dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' >
+      <title>Calendar</title>
+      <!-- Prevent the demo from appearing in search engines -->
+      <meta name="robots" content="noindex">
+      <link type="text/css" href="/dev/font.css" rel="stylesheet">
+      <style>
+         .text-label, .modal-title{
+         font-family: 'noto_bold';
+         }
+         .js-lists-values-employee-name, .modal-body{
+         font-family: 'noto_demilight';
+         color:#303030;
+         }
+         .mdk-header-layout__content {
+         padding-top: 56px;
+         }
+         .breadcrumb-item::before {
+         display: inline-block;
+         padding-right: 0.5rem;
+         color: rgba(54, 76, 102, 0.24);
+         content:none;
+         }
+         #staff > tr > td.tag{
+           padding:10px 0px 10px 15px;
+         }
+         #staff > tr > td.month{
+           padding:20px;
+           text-align:center;
+         }
+      </style>
+      <!-- Perfect Scrollbar -->
+      <link type="text/css" href="/vendor/perfect-scrollbar.css" rel="stylesheet">
+      <!-- App CSS -->
+      <link type="text/css" href="/css/app.css" rel="stylesheet">
+      <link type="text/css" href="/css/app.rtl.css" rel="stylesheet">
+      <!-- Material Design Icons -->
+      <link type="text/css" href="/css/vendor-material-icons.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-material-icons.rtl.css" rel="stylesheet">
+      <!-- Font Awesome FREE Icons -->
+      <link type="text/css" href="/css/vendor-fontawesome-free.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-fontawesome-free.rtl.css" rel="stylesheet">
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133433427-1"></script>
+      <!-- Flatpickr -->
+      <link type="text/css" href="/css/vendor-flatpickr.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-flatpickr.rtl.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-flatpickr-airbnb.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-flatpickr-airbnb.rtl.css" rel="stylesheet">
+      <script>
+         window.dataLayer = window.dataLayer || [];
+
+         function gtag() {
+             dataLayer.push(arguments);
+         }
+         gtag('js', new Date());
+
+         gtag('config', 'UA-133433427-1');
+      </script>
+      <!-- FullCalendar -->
+      <link type="text/css" href="/vendor/fullcalendar/fullcalendar.min.css" rel="stylesheet">
+   </head>
+   <body class="layout-default">
+      <div class="preloader"></div>
+      <!-- Header Layout -->
+      <div class="mdk-header-layout js-mdk-header-layout">
+         <div th:replace="widget/header"></div>
+         <div class="mdk-header-layout__content" id="newPlanDocument">
+            <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+               <div class="mdk-drawer-layout__content page">
+                  <div class="container-fluid page__heading-container">
+                     <div class="page__heading d-flex align-items-center" >
+                        <div class="flex">
+                           <nav aria-label="breadcrumb" style="float:left">
+                              <ol class="breadcrumb mb-0">
+                                 <li class="breadcrumb-item" onclick="window.history.back();" style="cursor:pointer;"><a><i class="material-icons" style="font-size:2.2rem;">keyboard_arrow_left</i></a></li>
+                              </ol>
+                           </nav>
+                           <h4 class="m-0" style="float:right; font-family: 'noto_bold';">일정통계</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group" style="margin:10px;">
+                     <div class="btn-group btn-group-toggle mb-2" data-toggle="buttons" style="width:100%;" name="periods">
+                        <label class="btn btn-light"  style="font-family: 'noto_light'; color:#404040;" name="label-days" >
+                          <input type="radio" onclick="onClickDate('days')"> 일
+                        </label>
+                        <label class="btn btn-light"  style="font-family: 'noto_light'; color:#404040;"  name="label-weeks" >
+                          <input type="radio" onclick="onClickDate('weeks')"> 주
+                        </label>
+                        <label class="btn btn-light"  style="font-family: 'noto_light'; color:#404040;"  name="label-months" >
+                          <input type="radio" onclick="onClickDate('months')"> 월
+                        </label>
+                     </div>
+                  </div>
+                  <div class="card" style="margin:10px;">
+                     <div class="card-body">
+                        <p name="select-date-calender" style="text-align:right;" data-toggle="modal" data-target="#modal-select-days">
+                          <span style="font-family:'noto_demilight'" name="select-date">2021-05-17</span>
+                          <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons" style="color:#5A5A5A; margin:" >event_available</i>
+                        </p>
+                        <div class="chart">
+                           <canvas id="devicesChart" class="chart-canvas"></canvas>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card card-form" style="margin:10px;">
+                     <div class="row no-gutters" style="font-family:'noto_demilight'">
+                        <div class="col-lg-12 card-form__body" style="padding-top:15px;">
+                           <p><strong class="headings-color" style="margin:15px;">총 소요시간 : <span name="totalTiems">0</span>시간 <span name="totalMinute">0</span>분</strong></p>
+                           <div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                              <table class="table mb-0 thead-border-top-0" >
+                                 <tbody class="list" id="staff">
+                                    <tr>
+                                       <td class="tag"><span class="badge main-business" style="margin-right:10px;">&nbsp</span><span>주업무</span></td>
+                                       <td class="tag"><span name="mainTimes">0</span><span> 시간</span></td>
+                                        <td class="tag"><span class="badge sub-business" style="margin-right:10px;">&nbsp</span><span>부업무</span></td>
+                                        <td class="tag"><span name="subTimes">0</span><span> 시간</span></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="tag"><span class="badge develop" style="margin-right:10px;">&nbsp</span><span>자기계발</span></td>
+                                       <td class="tag"><span name="developTimes">0</span><span> 시간</span></td>
+                                        <td class="tag"><span class="badge family" style="margin-right:10px;">&nbsp</span><span>가족</span></td>
+                                        <td class="tag"><span name="familyTimes">0</span><span> 시간</span></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="tag"><span class="badge networking" style="margin-right:10px;">&nbsp</span><span>인맥관리</span></td>
+                                       <td class="tag"><span name="networkingTimes">0</span><span> 시간</span></td>
+                                        <td class="tag"><span class="badge friends" style="margin-right:10px;">&nbsp</span><span>친구, 지인</span></td>
+                                        <td class="tag"><span  name="friendTiems">0</span><span> 시간</span></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="tag"><span class="badge etc" style="margin-right:10px;">&nbsp</span><span>기타, 이동</span></td>
+                                       <td class="tag"><span name="etcTimes">0</span><span> 시간</span></td>
+                                        <td class="tag"></td>
+                                        <td class="tag"></td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div th:replace="widget/nav"></div>
+      <div th:replace="modal/chartModal"></div>
+      <!-- jQuery -->
+      <script src="/vendor/jquery.min.js"></script>
+      <!-- Bootstrap -->
+      <script src="/vendor/popper.min.js"></script>
+      <script src="/vendor/bootstrap.min.js"></script>
+      <!-- Perfect Scrollbar -->
+      <script src="/vendor/perfect-scrollbar.min.js"></script>
+      <!-- DOM Factory -->
+      <script src="/vendor/dom-factory.js"></script>
+      <!-- MDK -->
+      <script src="/vendor/material-design-kit.js"></script>
+      <!-- App -->
+      <script src="/js/toggle-check-all.js"></script>
+      <script src="/js/check-selected-row.js"></script>
+      <script src="/js/dropdown.js"></script>
+      <!-- <script src="/js/sidebar-mini.js"></script> -->
+      <script src="/js/app.js"></script>
+      <script src="/dev/calender.js"></script>
+      <!-- jQuery UI (for draggable) -->
+      <script src="/vendor/jquery-ui.min.js"></script>
+      <!-- Moment.js -->
+      <script src="/vendor/moment.min.js"></script>
+      <script src="/dev/service.js"></script>
+      <script src="/dev/restfulApi.js"></script>
+      <!-- Chart.js -->
+      <script src="/vendor/Chart.min.js"></script>
+      <script src="/js/settings.js"></script>
+      <!-- Flatpickr -->
+      <script src="/vendor/flatpickr/flatpickr.min.js"></script>
+      <script src="/js/flatpickr.js"></script>
+      <!-- UI Charts Page JS -->
+      <script src="/js/chartjs-rounded-bar.js"></script>
+      <script src="/js/charts.js"></script>
+      <script>
+        let devService = new Service();
+        let tagLabels = ["주업무","부업무","자기계발","가족","인맥관리","친구,지인","기타,이동"];
+        var startDate = date_to_str(new Date());
+        var endDate = date_to_str(new Date());
+        var tagDatas = [];
+        var Devices = function Devices(id) {
+          var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'pie';
+          var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+          options = Chart.helpers.merge({
+            tooltips: {
+              callbacks: {
+                title: function title(a, e) {
+                  return e.labels[a[0].index];
+                },
+                label: function label(a, e) {
+                  var t = "";
+                  return t += '<span class="popover-body-value">' + e.datasets[0].data[a.index] + "%</span>";
+                }
+              }
+            }
+          }, options);
+          var data = {
+            labels: tagLabels,
+            datasets: [{
+              data: tagDatas,
+              backgroundColor: ["#E3AEBC", "#F7BDA6", "#B1CBDB","#C1D588","#D3C1DD","#F8E397","#DBDBDB"],
+              hoverBorderColor: "dark" == settings.charts.colorScheme ? settings.colors.gray[800] : settings.colors.white
+            }]
+          };
+          Charts.create(id, type, options, data);
+        };
+        $('label[name="label-days"]').trigger('click');
+
+        function showChart(selectStartDate, selectEndDate){
+          devService.findTagChartDataByMember(selectStartDate, selectEndDate, function(result){
+            console.log("result : ", result);
+            tagDatas = [
+              Number(result['main_business'].second)/3600,
+              Number(result['sub_business'].second)/3600,
+              Number(result['develop'].second)/3600,
+              Number(result['family'].second)/3600,
+              Number(result['network'].second)/3600,
+              Number(result['friend'].second)/3600,
+              Number(result['etc'].second)/3600,
+            ];
+
+            $("span[name=mainTimes]").text(Math.floor(result['main_business'].second / 3600));
+            $("span[name=subTimes]").text(Math.floor(result['sub_business'].second / 3600));
+            $("span[name=developTimes]").text(Math.floor(result['develop'].second / 3600));
+            $("span[name=familyTimes]").text(Math.floor(result['family'].second / 3600));
+            $("span[name=networkingTimes]").text(Math.floor(result['network'].second / 3600));
+            $("span[name=friendTiems]").text(Math.floor(result['friend'].second / 3600));
+            $("span[name=etcTimes]").text(Math.floor(result['etc'].second / 3600));
+
+            var hour = Math.floor(result.totalSeconds / 3600);
+            var min =  Math.floor(Math.floor(result.totalSeconds % 3600) / 60 );
+
+            $("span[name=totalTiems]").text(Math.floor(result.totalSeconds / 3600));
+            $("span[name=totalMinute]").text(min);
+
+            Charts.init();
+            Devices('#devicesChart');
+          })
+        }
+
+
+
+        function onClickDate(period, startDate, endDate){
+          if (period) {
+            const today = new Date();
+            switch(period){
+              case "days" :
+                $("p[name=select-date-calender]").attr("data-target","#modal-select-days");
+                onClickDate(null, date_to_str(today), date_to_str(today));
+                break;
+              case "weeks" :
+                $("p[name=select-date-calender]").attr("data-target","#modal-select-weeks");
+                onClickDate(null, date_to_str(new Date().setDate(new Date().getDate() - 7)), date_to_str(new Date()));
+                break;
+              case "months" :
+                $("p[name=select-date-calender]").attr("data-target","#modal-select-month");
+                onClickDate(null,date_to_str(new Date().setMonth(new Date().getMonth()-1)),date_to_str(new Date()));
+                break;
+            }
+          }
+          else{
+            if(!startDate || !endDate) return;
+            if(startDate == endDate)
+              $("span[name=select-date]").text(startDate.split("T")[0]);
+            else{
+              $("span[name=select-date]").text(
+                date_to_str(startDate).split("T")[0] + " ~ " + endDate.split("T")[0]
+              );
+            }
+            showChart(startDate, endDate);
+          }
+        }
+
+        function date_to_str(format){
+          if(typeof(format) != "object") format = new Date(format);
+          var year = format.getFullYear();
+          var month = format.getMonth() + 1;
+          var date = format.getDate();
+          var hour = format.getHours();
+          var min = format.getMinutes();
+          var sec = format.getSeconds();
+
+          if(month<10) month = '0' + month;
+          if(date<10) date = '0' + date;
+          if(hour<10) hour = '0' + hour;
+          if(min<10) min = '0' + min;
+          if(sec<10) sec = '0' + sec;
+
+          return year + "-" + month + "-" + date + "T" + hour + ":" + min + ":" + sec;
+        }
+      </script>
+   </body>
+</html>

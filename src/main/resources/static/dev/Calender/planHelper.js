@@ -2,16 +2,21 @@ class PlanHelper{
   constructor(){
       this.title = "", // 제목
       this.color = "", // 색상
+      this.allMembers = new Array(), // 선택할수 있는 전체 인원
 
       this.limitDays = this.setLimitedDays("days"), // 기간 설정
-      this.local = "", // 장소
+      this.map = {}, // 장소
       this.members = new Array(), // 참여인원 설정
 
-      this.availableStartTime = "09:00", // 희망하는 일정 시작시간
-      this.availableEndTime = "12:00", // 희망하는 일정 종료시간
+      this.useTimes = "01:00", // 희망하는 일정 시작시간
 
-      this.availableDays = [1,2,3,4,5,6,7],
-      this.filterResult = null
+      this.availableTimes = new Array()
+  }
+  /** 선택할수 있는 전체 인원 초기화 **/
+  setAllMembers(members){
+    this.allMembers = members;
+
+    console.log("this : " , this);
   }
 
   /** 기간설정 메소드 **/
@@ -37,6 +42,17 @@ class PlanHelper{
     this.consoleHelper("setLimitedDays");
   }
 
+  setMap(map){
+    this.map = map;
+
+    $("input[name='local']").val("[" + map.name + "] " + map.address);
+    $("input[name='local']").attr("data-lon", map.lon);
+    $("input[name='local']").attr("data-lat", map.lat);
+    $("input[name='local']").attr("data-address", map.address);
+
+    this.consoleHelper("setMap");
+  }
+
   /** 참여 멤버 추가 **/
   addMember(memberId){
     if((this.members).indexOf(memberId) < 0)
@@ -53,36 +69,67 @@ class PlanHelper{
     this.consoleHelper("removeMember");
   }
 
-  /** 가능한 시간 설정 **/
-  setTimes(start, end){
-    $("label[name=result-times]").text("( " + start +" ~ " + end + " )");
+  /** 회의 시간 **/
+  setTimes(times){
+    const hours = Number(times.split(":")[0]) + "시간";
+    const minute = Number(times.split(":")[1]) == 0 ? "" : Number(times.split(":")[1]) + "분";
 
-    this.availableStartTime = start;
-    this.availableEndTime = end;
+    $("label[name=result-times]").text("( " + hours + minute + " )");
+
+    this.useTimes = times;
 
     this.consoleHelper("setTimes");
   }
 
-  addAvailableDays(index){
-    if((this.availableDays).indexOf(index) < 0){
-      (this.availableDays).push(index);
-    }
+  /** 가능한 시간 추가**/
+  addAvailableTimes(start, end){
+    const time = {
+      'start' : start,
+      'end' : end
+    };
 
-    this.consoleHelper("addAvailableDays");
+    if((this.availableTimes).indexOf(time) < 0)
+        (this.availableTimes).push(time);
+
+
+    this.consoleHelper("addAvailableTimes");
   }
 
-  removeAvaliableDays(index){
-    if((this.availableDays).indexOf(index) > 0){
-      this.availableDays = (this.availableDays)
-                            .filter(item => item !== index)
-                            .sort(function(a,b){
-                              return a-b;
-                            })
-    }
+  /** 가능한 시간 삭제**/
+  removeAvailableTimes(start, end){
+    var time = {
+      'start' : start,
+      'end' : end
+    };
+    (this.availableTimes).forEach((item, i) => {
+      if (item.start == time.start && item.end == time.end) {
+        (this.availableTimes).splice(i,1);
+      }
+    });
 
-    this.consoleHelper("removeAvaliableDays");
+    this.consoleHelper("removeAvailableTimes");
   }
-  
+
+  // addAvailableDays(index){
+  //   if((this.availableDays).indexOf(index) < 0){
+  //     (this.availableDays).push(index);
+  //   }
+  //
+  //   this.consoleHelper("addAvailableDays");
+  // }
+  //
+  // removeAvaliableDays(index){
+  //   if((this.availableDays).indexOf(index) > 0){
+  //     this.availableDays = (this.availableDays)
+  //                           .filter(item => item !== index)
+  //                           .sort(function(a,b){
+  //                             return a-b;
+  //                           })
+  //   }
+  //
+  //   this.consoleHelper("removeAvaliableDays");
+  // }
+
   /** 이번주 일요일을 찾는 함수 **/
   getSunday(now){
     var nowDayOfWeek = now.getDay();

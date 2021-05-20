@@ -7077,6 +7077,65 @@ html {
 [dir=ltr] .align-text-top {
   vertical-align: text-top !important;
 }
+/** custom Color **/
+
+[dir=ltr] .main-business {
+  background-color: #E3AEBC !important;
+}
+
+[dir=ltr] .main-business-tag {
+  color: #E3AEBC
+}
+
+[dir=ltr] .sub-business {
+  background-color: #F7BDA6 !important;
+}
+
+[dir=ltr] .sub-business-tag {
+  color: #F7BDA6 !important;
+}
+
+[dir=ltr] .friends {
+  background-color: #F8E397 !important;
+}
+
+[dir=ltr] .friends-tag {
+  color: #F8E397 !important;
+}
+
+[dir=ltr] .family {
+  background-color: #C1D588 !important;
+}
+
+[dir=ltr] .family-tag {
+  color: #C1D588 !important;
+}
+
+[dir=ltr] .develop {
+  background-color: #B1CBDB !important;
+}
+
+[dir=ltr] .develop-tag {
+  color: #B1CBDB !important;
+}
+
+[dir=ltr] .networking {
+  background-color: #D3C1DD !important;
+}
+
+[dir=ltr] .networking-tag {
+  color: #D3C1DD !important;
+}
+
+[dir=ltr] .etc {
+  background-color: #DBDBDB !important;
+}
+
+[dir=ltr] .etc-tag {
+  color: #DBDBDB !important;
+}
+
+
 
 [dir=ltr] .bg-primary {
   background-color: #6774DF !important;
@@ -13157,7 +13216,7 @@ html,
 }
 
 [dir=ltr] .table tbody .selected > td {
-  background-color: rgba(88, 151, 224, 0.05);
+  background-color: rgba(88, 151, 224, 0.2);
 }
 
 [dir=ltr] .table .sort {
@@ -15655,7 +15714,11 @@ html,
   line-height: 1.5;
   border-color: transparent;
   border-radius: 0.25rem;
-  padding: 0.25rem 0.5rem;
+
+  /* seo Dev*/
+  padding: 0.15rem 0.5rem;
+
+  /* padding: 0.25rem 0.5rem; */
 }
 
 [dir=ltr] .fc-title {

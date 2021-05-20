@@ -1,4 +1,4 @@
-package com.milestone.plancus.Api.Form;
+package com.milestone.plancus.Api.RequestForm;
 
 import lombok.Getter;
 import lombok.Setter;

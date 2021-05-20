@@ -1,6 +1,6 @@
 package com.milestone.plancus.Interceptor;
 
-import com.milestone.plancus.Api.DTO.MemberDTO;
+import com.milestone.plancus.Api.DTO.MemberDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,7 +13,7 @@ public class SigninInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession httpSession = request.getSession();
-        MemberDTO member = (MemberDTO) httpSession.getAttribute("member");
+        MemberDto member = (MemberDto) httpSession.getAttribute("member");
 
         if (member == null){
             System.out.println("로그인이 필요합니다.");

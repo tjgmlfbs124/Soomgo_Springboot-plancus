@@ -1,7 +1,5 @@
-package com.milestone.plancus.Api.Form;
+package com.milestone.plancus.Api.RequestForm;
 
-import com.milestone.plancus.Api.DTO.Attendance;
-import com.milestone.plancus.Api.DTO.MemberDTO;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 

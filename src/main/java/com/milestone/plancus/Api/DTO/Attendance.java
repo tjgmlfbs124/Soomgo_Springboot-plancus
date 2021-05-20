@@ -9,8 +9,8 @@ import java.util.List;
 
 @Data
 public class Attendance {
-    private List<MemberDTO> positiveMembers = new ArrayList<>();
-    private List<MemberDTO> negativeMembers = new ArrayList<>();
+    private List<MemberDto> positiveMembers = new ArrayList<>();
+    private List<MemberDto> negativeMembers = new ArrayList<>();
     private LocalDate date;
     private int positiveCnt = 0;
     private int negativeCnt = 0;
@@ -18,7 +18,7 @@ public class Attendance {
     public Attendance() {
     }
 
-    public Attendance(List<MemberDTO> positiveMembers, List<MemberDTO> negativeMembers, LocalDate date, int positiveCnt, int negativeCnt) {
+    public Attendance(List<MemberDto> positiveMembers, List<MemberDto> negativeMembers, LocalDate date, int positiveCnt, int negativeCnt) {
         this.positiveMembers = positiveMembers;
         this.negativeMembers = negativeMembers;
         this.date = date;
@@ -27,12 +27,12 @@ public class Attendance {
     }
 
     public void addPositiveMember(Member member){
-        this.positiveMembers.add(member.toMemberDTO());
+        this.positiveMembers.add(member.toDto());
         this.positiveCnt++;
     }
 
     public void addNegativeMember(Member member){
-        this.negativeMembers.add(member.toMemberDTO());
+        this.negativeMembers.add(member.toDto());
         this.negativeCnt++;
     }
 

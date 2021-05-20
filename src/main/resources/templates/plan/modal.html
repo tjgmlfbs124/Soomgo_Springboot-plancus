@@ -1,83 +1,189 @@
+<div id="modal-date" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-date-title"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> 날짜 선택</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- // END .modal-header -->
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <label class="text-label" for="modal_periodDate">Date</label>
+                        <input id="modal_periodDate" type="text" class="form-control" placeholder="Flatpickr example"
+                               data-toggle="flatpickr" value="today">
+                    </div>
+                </div>
+            </div>
+            <!-- // END .modal-body -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onClickDate()">Save
+                    changes
+                </button>
+            </div>
+            <!-- // END .modal-footer -->
+        </div>
+        <!-- // END .modal-content -->
+    </div>
+    <!-- // END .modal-dialog -->
+</div>
 
-<div id="modal-date" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-date-title" aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="modal-date-title"> 날짜 선택</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <!-- // END .modal-header -->
-         <div class="modal-body">
-            <div class="card">
-               <div class="card-body">
-                  <label class="text-label" for="modal_periodDate">Date</label>
-                  <input id="modal_periodDate" type="text" class="form-control" placeholder="Flatpickr example" data-toggle="flatpickr" value="today">
-               </div>
+<div id="modal-dateTodate" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-date-title"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> 날짜 선택</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-         </div>
-         <!-- // END .modal-body -->
-         <div class="modal-footer">
-            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onClickDate()">Save changes</button>
-         </div>
-         <!-- // END .modal-footer -->
-      </div>
-      <!-- // END .modal-content -->
-   </div>
-   <!-- // END .modal-dialog -->
+            <!-- // END .modal-header -->
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <label class="text-label" for="modal_periodDateToDate">Date</label>
+                        <input id="modal_periodDateToDate" type="text" class="form-control"
+                               placeholder="Flatpickr example" data-toggle="flatpickr" value="today">
+                    </div>
+                </div>
+            </div>
+            <!-- // END .modal-body -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onClickDateToDate()">Save
+                    changes
+                </button>
+            </div>
+            <!-- // END .modal-footer -->
+        </div>
+        <!-- // END .modal-content -->
+    </div>
+    <!-- // END .modal-dialog -->
 </div>
+
 <!-- // END .modal -->
-<div id="modal-time" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-time-title" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-   <div class="modal-content">
-      <div class="modal-header">
-         <h5 class="modal-title" id="modal-time-title">시간 선택</h5>
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-         <span aria-hidden="true">&times;</span>
-         </button>
-      </div>
-      <!-- // END .modal-header -->
-      <div class="modal-body">
-         <div class="container-fluid page__container" style="padding:0px;">
-            <div class="form-group" style="margin-bottom:10px;">
-               <label class="text-label" for="password_2">선택한 기간</label>
-               <div class="input-group input-group-merge">
-                  <input type="text" class="form-control form-control" style="margin-right:10px; flex:2 1 0%;" name="input-select-period" readonly>
-                  <div class="flex mt-10" >
-                     <div class="custom-control custom-checkbox-toggle custom-control-inline mr-1" style="float:right; margin-top:5px">
-                        <input type="checkbox" id="checkbox-today" class="custom-control-input">
-                        <label class="custom-control-label" for="checkbox-today"></label>
-                     </div>
-                     <label for="subscribe" style="float:right; margin:7px 3px 0px 0px">종일</label>
-                  </div>
-               </div>
+<div id="modal-time" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-time-title"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">시간 선택</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-group" id="form-select-times">
-               <label class="text-label" for="password_2">시간</label>
-               <div class="input-group input-group-merge">
-                  <input name="input-startTimes" type="text" class="form-control" placeholder="Flatpickr time example" data-toggle="flatpickr" data-flatpickr-enable-time="true" data-flatpickr-no-calendar="true" data-flatpickr-alt-format="H:i" data-flatpickr-date-format="H:i" value="09:00" >
-                  <span style="margin:10px;"> ~ </span>
-                  <input name="input-endTimes" type="text" class="form-control" placeholder="Flatpickr time example" data-toggle="flatpickr" data-flatpickr-enable-time="true" data-flatpickr-no-calendar="true" data-flatpickr-alt-format="H:i" data-flatpickr-date-format="H:i" value="13:00" >
-               </div>
+            <!-- // END .modal-header -->
+            <div class="modal-body">
+                <div class="container-fluid page__container" style="padding:0px;">
+                    <div class="form-group" style="margin-bottom:10px;">
+                        <label class="text-label">선택한 기간</label>
+                        <div class="input-group input-group-merge">
+                            <input type="text" class="form-control form-control" style="margin-right:10px; flex:2 1 0%;"
+                                   name="input-select-period" readonly>
+                            <div class="flex mt-10">
+                                <div class="custom-control custom-checkbox-toggle custom-control-inline mr-1"
+                                     style="float:right; margin-top:5px">
+                                    <input type="checkbox" id="checkbox-today" class="custom-control-input">
+                                    <label class="custom-control-label" for="checkbox-today"></label>
+                                </div>
+                                <label style="float:right; margin:7px 3px 0px 0px">종일</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-label">시간</label>
+                        <div class="input-group input-group-merge">
+                            <select class="custom-select" name="selectTimes-hour"></select>
+                            <span style="margin:10px;">시간</span>
+                            <select class="custom-select" name="selectTimes-minute"></select>
+                            <span style="margin:10px;">분</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-      <!-- // END .modal-body -->
-      <div class="modal-footer">
-         <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onClickTimes()" >Save changes</button>
-      </div>
-      <!-- // END .modal-footer -->
-   </div>
-   <!-- // END .modal-content -->
+            <!-- // END .modal-body -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onClickTimes()">Save
+                    changes
+                </button>
+            </div>
+            <!-- // END .modal-footer -->
+        </div>
+        <!-- // END .modal-content -->
+    </div>
 </div>
+
+<div id="modal-timeToTime" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-time-title"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-time-title">시간 선택</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- // END .modal-header -->
+            <div class="modal-body">
+                <div class="container-fluid page__container" style="padding:0px;">
+                    <div class="form-group" style="margin-bottom:10px;">
+                        <label class="text-label">선택한 기간</label>
+                        <div class="input-group input-group-merge">
+                            <input type="text" class="form-control form-control" style="margin-right:10px; flex:2 1 0%;"
+                                   name="input-select-period" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top:40px;">
+                        <label class="text-label">시작시간</label>
+                        <div class="input-group input-group-merge">
+                            <select class="custom-select" name="selectTimes-start" style="margin-right:10px;">
+                                <option>AM</option>
+                                <option>PM</option>
+                            </select>
+                            <select class="custom-select" name="selectTimes-start-hour"></select>
+                            <span style="margin:10px;">시</span>
+                            <select class="custom-select" name="selectTimes-start-minute"></select>
+                            <span style="margin:10px;">분</span>
+                        </div>
+                    </div>
+                    <div class="form-group" id="form-select-times">
+                        <label class="text-label">종료시간</label>
+                        <div class="input-group input-group-merge">
+                            <select class="custom-select" name="selectTimes-end" style="margin-right:10px;">
+                                <option>AM</option>
+                                <option>PM</option>
+                            </select>
+                            <select class="custom-select" name="selectTimes-end-hour"></select>
+                            <span style="margin:10px;">시</span>
+                            <select class="custom-select" name="selectTimes-end-minute"></select>
+                            <span style="margin:10px;">분</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- // END .modal-body -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onClickTimeToTime()">Save
+                    changes
+                </button>
+            </div>
+            <!-- // END .modal-footer -->
+        </div>
+        <!-- // END .modal-content -->
+    </div>
 </div>
 <!-- // END .modal-dialog -->
 
 
-<div id="modal-confirm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-confirm-title" aria-hidden="true">
+<div id="modal-confirm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-confirm-title"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -93,35 +199,121 @@
             </div> <!-- // END .modal-body -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="onClickSubmit()">Submit</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onClickSubmit()">Submit
+                </button>
             </div> <!-- // END .modal-footer -->
         </div> <!-- // END .modal-content -->
     </div> <!-- // END .modal-dialog -->
 </div> <!-- // END .modal -->
 
 <script>
+  const selectDate = "";
+  const selectStartTime = "";
+  const selectEndTime = "";
+
   function onClickDate() {
     planHelper.setLimitedDays( new Date($("#modal_periodDate").val()))
   }
 
+  function onClickDateToDate(){
+    var startSelect = $("select[name=selectTimes-start]").val();
+    var startHours = $("select[name=selectTimes-start-hour]").val() ;
+    var startMinute = $("select[name=selectTimes-start-minute]").val();
+
+    var endSelect = $("select[name=selectTimes-end]").val();
+    var endHours = $("select[name=selectTimes-end-hour]").val() ;
+    var endMinute = $("select[name=selectTimes-end-minute]").val();
+
+    if (startSelect == "PM") startHours = Number(startHours) + 12;
+    if (endSelect == "PM") endHours = Number(endHours) + 12;
+
+    if (startHours.length < 2) startHours = '0' + startHours;
+    if (startMinute.length < 2) startMinute = '0' + startMinute;
+
+    if (endHours.length < 2) endHours = '0' + endHours;
+    if (endMinute.length < 2) endMinute = '0' + endMinute;
+
+    console.log("date : ",$("#modal_periodDateToDate").val());
+    selectStartDate = $("#modal_periodDateToDate").val() + "T"+startHours+":"+startMinute+":00";
+    selectEndDate = $("#modal_periodDateToDate").val() + "T"+endHours+":"+endMinute+":00";
+
+    $("input[name=input-select-period]").val(date_to_str(new Date($("#modal_periodDateToDate").val() )));
+    $("label[name=resultDate]").text(date_to_str(new Date($("#modal_periodDateToDate").val())));
+    $("label[name=resultTime]").text(startHours+":"+startMinute + " ~ " + endHours+":"+endMinute);
+
+  }
+
   function onClickTimes() {
     if($("#checkbox-today").is(":checked")){
-      planHelper.setTimes("09:00","18:00");
+      planHelper.setTimes("12:00");
     }
     else{
-      var start = $("input[name=input-startTimes]").val();
-      var end = $("input[name=input-endTimes]").val();
-      planHelper.setTimes(start, end);
+      var hours = $("select[name=selectTimes-hour]").val() ;
+      var minute = $("select[name=selectTimes-minute]").val();
+
+      if (hours.length < 2) {
+        hours = '0' + hours;
+      }
+      if (minute.length > 2) {
+        minute = '0' + minute;
+      }
+
+      planHelper.setTimes(hours + ":" + minute);
     }
   }
 
-  function onClickSubmit(){
-    devService.submitPlan(function(result){
-      console.log("result : " ,result);
-      if (result.length > 0 ) {
-        alert("등록되었습니다.");
-        location.href="/calender/monthly"
-      }
-    });
+  function onClickTimeToTime() {
+    var startSelect = $("select[name=selectTimes-start]").val();
+    var startHours = $("select[name=selectTimes-start-hour]").val() ;
+    var startMinute = $("select[name=selectTimes-start-minute]").val();
+
+    var endSelect = $("select[name=selectTimes-end]").val();
+    var endHours = $("select[name=selectTimes-end-hour]").val() ;
+    var endMinute = $("select[name=selectTimes-end-minute]").val();
+
+    if (startSelect == "PM") startHours = Number(startHours) + 12;
+    if (endSelect == "PM") endHours = Number(endHours) + 12;
+
+    if (startHours.length < 2) startHours = '0' + startHours;
+    if (startMinute.length < 2) startMinute = '0' + startMinute;
+
+    if (endHours.length < 2) endHours = '0' + endHours;
+    if (endMinute.length < 2) endMinute = '0' + endMinute;
+
+    selectStartDate = $("#modal_periodDateToDate").val() + "T"+startHours+":"+startMinute+":00";
+    selectEndDate = $("#modal_periodDateToDate").val() + "T"+endHours+":"+endMinute+":00";
+
+    $("input[name=input-select-period]").val(date_to_str(new Date($("#modal_periodDateToDate").val() )));
+    $("label[name=resultDate]").text(date_to_str(new Date($("#modal_periodDateToDate").val() )));
+    $("label[name=resultTime]").text(startHours+":"+startMinute + " ~ " + endHours+":"+endMinute);
+
   }
+
+  function onClickSubmit(){
+    console.log("filterHelper : " , filterHelper);
+    if (!filterHelper.selectStartDate) {
+      alert("날짜를 선택해주세요.")
+    }
+    else{
+      console.log("headId : " , headId);
+      devService.confirmPlan(headId, filterHelper, function(result){
+        console.log("result : ", result);
+        if (result) {
+          alert("등록되었습니다.");
+          location.href="/plan/public/list"
+        }
+      });
+    }
+  }
+
+  function date_to_str(format){
+      var year = format.getFullYear();
+      var month = format.getMonth() + 1;
+      var date = format.getDate();
+
+      if(month<10) month = '0' + month;
+      if(date<10) date = '0' + date;
+      return year + "-" + month + "-" + date;
+  }
+
 </script>

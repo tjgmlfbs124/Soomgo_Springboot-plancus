@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th='http://www.thymeleaf.org' dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' >
+      <title>Calendar</title>
+      <!-- Prevent the demo from appearing in search engines -->
+      <meta name="robots" content="noindex">
+      <link type="text/css" href="/dev/font.css" rel="stylesheet">
+      <style>
+         .text-label, .modal-title{
+         font-family: 'noto_bold';
+         }
+         .js-lists-values-employee-name, .modal-body{
+         font-family: 'noto_demilight';
+         color:#303030;
+         }
+         .mdk-header-layout__content {
+         padding-top: 56px;
+         }
+      </style>
+      <!-- Perfect Scrollbar -->
+      <link type="text/css" href="/vendor/perfect-scrollbar.css" rel="stylesheet">
+      <!-- App CSS -->
+      <link type="text/css" href="/css/app.css" rel="stylesheet">
+      <link type="text/css" href="/css/app.rtl.css" rel="stylesheet">
+      <!-- Material Design Icons -->
+      <link type="text/css" href="/css/vendor-material-icons.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-material-icons.rtl.css" rel="stylesheet">
+      <!-- Font Awesome FREE Icons -->
+      <link type="text/css" href="/css/vendor-fontawesome-free.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-fontawesome-free.rtl.css" rel="stylesheet">
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133433427-1"></script>
+      <!-- Flatpickr -->
+      <link type="text/css" href="/css/vendor-flatpickr.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-flatpickr.rtl.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-flatpickr-airbnb.css" rel="stylesheet">
+      <link type="text/css" href="/css/vendor-flatpickr-airbnb.rtl.css" rel="stylesheet">
+      <script>
+         window.dataLayer = window.dataLayer || [];
+
+         function gtag() {
+             dataLayer.push(arguments);
+         }
+         gtag('js', new Date());
+
+         gtag('config', 'UA-133433427-1');
+      </script>
+      <!-- FullCalendar -->
+      <link type="text/css" href="/vendor/fullcalendar/fullcalendar.min.css" rel="stylesheet">
+   </head>
+   <body class="layout-default">
+      <div class="preloader"></div>
+      <!-- Header Layout -->
+      <div class="mdk-header-layout js-mdk-header-layout">
+         <div th:replace="widget/header"></div>
+         <div class="mdk-header-layout__content" id="newPlanDocument">
+            <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
+               <div class="mdk-drawer-layout__content page">
+                  <div class="container-fluid page__heading-container">
+                     <div class="page__heading d-flex align-items-center" style="margin-bottom:20px;">
+                        <div class="flex">
+                           <nav aria-label="breadcrumb" style="float:left">
+                              <ol class="breadcrumb mb-0">
+                                 <li class="breadcrumb-item"><a href="/"><i class="material-icons icon-20pt">home</i></a></li>
+                                 <li class="breadcrumb-item active" aria-current="page" style="cursor:pointer;"><a>MyPlancus</a></li>
+                              </ol>
+                           </nav>
+                           <h4 class="m-0" style="float:right; font-family: 'noto_bold';">
+                             <button class="btn btn-primary mb-2" onclick="location.href='/plan/public/request'" style="width:100%;">
+                               <a class="material-icons" style="font-family: 'noto_bold'; font-size:15px;">
+                                 AI 일정추가
+                               </a>
+                             </button>
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="container-fluid page__container">
+                     <div class="col-lg-12 card-form__body" style="padding:0px;">
+                        <div class="table-responsive border-bottom" data-toggle="lists" data-lists-values='["js-lists-values-employee-name"]'>
+                           <table class="table mb-0 thead-border-top-0">
+                              <thead>
+                                 <tr >
+                                    <th style="width: 37px; padding:0.35rem 0rem 0.35rem 0rem; text-align:center;">호스트</th>
+                                    <th style="width: 120px; padding:0.35rem 0rem 0.35rem 0rem; text-align:center;">제목</th>
+                                    <th style="width: 51px; padding:0.35rem 0rem 0.35rem 0rem; text-align:center;">신청일</th>
+                                    <th style="width: 70px; padding:0.35rem 0rem 0.35rem 0rem; text-align:center;">상태</th>
+                                 </tr>
+                              </thead>
+                              <tbody class="list" id="staff">
+                                 <tr style="cursor:pointer;" th:each="filter : ${filters}" th:classappend="${filter.isRead} == false ? 'selected'" th:onclick="'location.href=\'/plan/public/detail?id=' + ${filter.headId} +'\''">
+                                    <td style="padding:0.35rem 0rem 0.35rem 0rem; text-align:center;"><small class="text-muted" th:text="${filter.host.member_name}">홍길동</small></td>
+                                    <td><small class="text-muted" th:text="${filter.title}"></small></td>
+                                    <td style="padding:0.35rem 0rem 0.35rem 0rem; text-align:center;"><small class="text-muted" th:text="${#temporals.format(filter.createByDate, 'yyyy-MM-dd')}">21.12.11</small></td>
+                                    <td  style="text-align:center;" th:switch="${filter.state}">
+                                      <small class="text-muted" th:case="${T(com.milestone.plancus.Domain.FilterType).WAITING}" th:text="투표중"></small>
+                                      <small class="text-muted" th:case="${T(com.milestone.plancus.Domain.FilterType).CONFIRMING}" th:text="확정중"></small>
+                                      <small class="text-muted" th:case="${T(com.milestone.plancus.Domain.FilterType).CONFIRM}" th:text="확정"></small>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div th:replace="widget/nav"></div>
+      <div th:replace="plan/modal"></div>
+      <!-- jQuery -->
+      <script src="/vendor/jquery.min.js"></script>
+      <!-- Bootstrap -->
+      <script src="/vendor/popper.min.js"></script>
+      <script src="/vendor/bootstrap.min.js"></script>
+      <!-- Perfect Scrollbar -->
+      <script src="/vendor/perfect-scrollbar.min.js"></script>
+      <!-- DOM Factory -->
+      <script src="/vendor/dom-factory.js"></script>
+      <!-- MDK -->
+      <script src="/vendor/material-design-kit.js"></script>
+      <!-- App -->
+      <script src="/js/toggle-check-all.js"></script>
+      <script src="/js/check-selected-row.js"></script>
+      <script src="/js/dropdown.js"></script>
+      <!-- <script src="/js/sidebar-mini.js"></script> -->
+      <script src="/js/app.js"></script>
+      <script src="/dev/calender.js"></script>
+      <!-- jQuery UI (for draggable) -->
+      <script src="/vendor/jquery-ui.min.js"></script>
+      <!-- Moment.js -->
+      <script src="/vendor/moment.min.js"></script>
+      <!-- Flatpickr -->
+      <script src="/vendor/flatpickr/flatpickr.min.js"></script>
+      <script src="/js/flatpickr.js"></script>
+      <script src="/dev/service.js"></script>
+      <script src="/dev/restfulApi.js"></script>
+   </body>
+</html>

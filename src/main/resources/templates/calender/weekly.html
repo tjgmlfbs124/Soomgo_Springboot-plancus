@@ -53,6 +53,7 @@
 <!-- Header Layout -->
 <div class="mdk-header-layout js-mdk-header-layout">
   <div th:replace="widget/header"></div>
+  <div th:replace="widget/bottom"></div>
     <div class="mdk-header-layout__content">
         <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
             <div class="mdk-drawer-layout__content page">
@@ -62,16 +63,15 @@
                           <nav aria-label="breadcrumb">
                               <ol class="breadcrumb mb-0">
                                   <li class="breadcrumb-item"><a href="/"><i class="material-icons icon-20pt">home</i></a></li>
-                                  <li class="breadcrumb-item active" aria-current="page" onclick="location.href='/calender/monthly'" style="cursor:pointer;" >Calendar</li>
-                                  <li class="breadcrumb-item active" aria-current="page" onclick="location.href='/calender/weekly'" style="cursor:pointer;"><a>Weekly<a></li>
+                                  <li class="breadcrumb-item active" aria-current="page" onclick="location.href='/plan/monthly'" style="cursor:pointer;" >Calendar</li>
+                                  <li class="breadcrumb-item active" aria-current="page" onclick="location.href='/plan/weekly'" style="cursor:pointer;"><a>Weekly</a></li>
                               </ol>
                           </nav>
                       </div>
-                      <a href="/plan/request" class="btn ml-3" style="background-color:#5478B5; color:#fff;">New<i class="material-icons">add</i></a>
                   </div>
               </div>
 
-                <div class="container-fluid page__container">
+                <div class="container-fluid page__container" style="padding-bottom:100px;">
                     <div class="row">
                         <div class="col-lg-9">
                             <div class="card card-body" style="padding:0px; border:none;">
@@ -208,27 +208,30 @@
       result.forEach((item, i) => {
         var today = new Date();
         var itemStartDate =  new Date(item.startTime);
-        var itemEndDate =  new Date(item.endTime);
+        var itemEndDate =  new Date(item.startTime);
 
         if ( today.yyyymmdd() == itemStartDate.yyyymmdd() ) {
           $("#today-plan-empty").hide();
-          $("#external-events").append(
-            "<div class=\"external-event bg-success\" data-class=\"bg-success\" style=\"position:relative;\">"+
-                "<i class=\"mr-2 material-icons\" style=\"line-height:1.25;\">drag_handle</i>"+
-                "<span class=\"external-event__title\" style=\"line-height:2;\">" + item.title + "</span>"+
-                "<span class=\"external-event__title\" style=\"line-height:2; position:absolute; right:8px;\">" + itemStartDate.hhMM() + " ~ " + itemEndDate.hhMM() +"</span>"+
-            "</div>"
-          )
+          item.todoList.forEach((todo, i) => {
+              $("#external-events").append(
+                "<div class=\"external-event " + item.color + "\" data-class=\"" + item.color + "\" style=\"position:relative;\" style=\"cursor:pointer;\" onclick=\"location.href='/todo/detail?id=" + item.id +"'\">"+
+                // "<div class=\"external-event " + item.color + "\" data-class=\"" + item.color + "\" style=\"position:relative;\" style=\"cursor:pointer;\">"+
+                    "<i class=\"mr-2 material-icons\" style=\"line-height:1.25;\">drag_handle</i>"+
+                    "<span class=\"external-event__title\" style=\"line-height:2;\">" + todo.content + "</span>"+
+                    "<span class=\"external-event__title\" style=\"line-height:2; position:absolute; right:8px;\">" + " ~ " + itemEndDate.yyyymmdd()+ " " + itemEndDate.hhMM() +"</span>"+
+                "</div>"
+              )
+          });
         }
 
         mc.events.push({
           title: item.title,
           planId : item.id,
-          start : new Date(item.startTime),
-          end : new Date(item.endTime),
-          host: item.host.member_name,
+          start : itemStartDate,
+          end : itemEndDate,
+          host: item.hostName,
           local: item.local,
-          className: "bg-success"
+          className: item.color
         })
       });
 
@@ -241,9 +244,9 @@
     var mm = this.getMonth() + 1; // getMonth() is zero-based
     var dd = this.getDate();
 
-    return [this.getFullYear(),
-            (mm>9 ? '' : '0') + mm,
-            (dd>9 ? '' : '0') + dd
+    return [
+            (mm>9 ? '' : '0') + mm + "월",
+            (dd>9 ? '' : '0') + dd + "일"
            ].join('');
   };
 
@@ -256,7 +259,6 @@
             (MM<10 ? '0' : '') + MM
           ].join(':');
   };
-
 </script>
 
 </body>

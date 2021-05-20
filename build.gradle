@@ -19,7 +19,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
+//	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
 
 	runtimeOnly 'mysql:mysql-connector-java'
 	runtimeOnly 'com.h2database:h2'
@@ -31,6 +31,15 @@ dependencies {
 	testImplementation("org.junit.vintage:junit-vintage-engine") {
 		exclude group: "org.hamcrest", module: "hamcrest-core"
 	}
+
+//	compileOnly(group: 'org.projectlombok',name: 'lombok',version: '1.18.8')
+	annotationProcessor(group: 'org.projectlombok', name:'lombok', version:'1.18.8')
+}
+
+bootJar{
+	archiveBaseName='milestone365'
+	archiveFileName='plancus.jar'
+	archiveVersion='1.0.0'
 }
 
 test {
