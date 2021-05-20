@@ -26,9 +26,9 @@ public class TodoService {
      */
     @Transactional(readOnly = false)
     public Long saveByHead(List<Plan> plans, PlanFilterHead head){
+        if(head.getTodoList() == null) return 1L;
 
         if (head.getTodoList().split("&&").length > 0){
-
             for (Plan plan : plans) { // 1 2 3
                 for (String todo : head.getTodoList().split("&&")) {
                     todoRepository.save(new TodoList(plan.getMember(), plan, todo));

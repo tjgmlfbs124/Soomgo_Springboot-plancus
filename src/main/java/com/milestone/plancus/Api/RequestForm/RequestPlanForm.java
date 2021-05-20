@@ -41,14 +41,20 @@ public class RequestPlanForm {
 
     public String todoListJoinToString(List<String> todoList){
         StringBuilder temp = new StringBuilder();
-        for (String todo : todoList) {
-            temp.append(todo).append("&&");
-        }
+        if (todoList.size() > 0){
 
-        return temp.toString().substring(
-                0,
-                temp.toString().length()-2
-        );
+            for (String todo : todoList) {
+                temp.append(todo).append("&&");
+            }
+
+            return temp.toString().substring(
+                    0,
+                    temp.toString().length()-2
+            );
+        }
+        else{
+            return null;
+        }
     }
 
     public void setMap(MapDto dto){

@@ -235,10 +235,11 @@ public class PlanFilterService {
                     List<LocalTime> startTimesList = new ArrayList<>();
 
                     for (LocalTime startTime : startTimes) { // 6 9 18
+                        startTimesList.add(startTime);
                         System.out.println("startTime = " + startTime);
 
                         // 검색하려는 시간이 현재시간을 넘었는가 ? 패스 : 선택한 시간을 본다.
-                        if (!LocalDateTime.of(startSearchDate,startTime).isBefore(LocalDateTime.now())){
+                        if (!LocalDateTime.of(startSearchDate, startTime).isBefore(LocalDateTime.now())){
 
                             PlanFilterDetail detail = detailRepository.findAllDetailByHeadWithMember(head.getId(), member.getId()).stream().findAny().get();
 
@@ -263,17 +264,24 @@ public class PlanFilterService {
                                         System.out.println("인덱스 시간  = " +  memberAvailableStartTime + "~" + memberAvailableEndTime);
                                         System.out.println("일정 시간  = " +  planStartTime + "~" + planEndTime);
 
-                                        if (startSearchDate.equals(LocalDate.from(planStartTime))){
-                                            System.out.println("aaaa  = " + aaaa );
-                                            System.out.println();
+                                        if (startTime.equals(LocalTime.of(Integer.parseInt(availableUseTime.getStartTime().split(":")[0]), Integer.parseInt(availableUseTime.getStartTime().split(":")[1])))) {
                                             aaaa.setMember(member.toDto());
                                             memberToList.add(aaaa);
                                         }
+
+
+//                                        if (startSearchDate.equals(LocalDate.from(planStartTime))){
+//                                            System.out.println("aaaa  = " + aaaa );
+//                                            aaaa.setMember(member.toDto());
+//                                            memberToList.add(aaaa);
+//                                        }
+                                        System.out.println();
                                     }
                                     else{
                                         System.out.println("일정이 겹칩니다");
                                         System.out.println("인덱스 시간  = " +  memberAvailableStartTime + "~" + memberAvailableEndTime);
                                         System.out.println("일정 시간  = " +  planStartTime + "~" + planEndTime);
+                                        System.out.println();
                                     }
                                 }
                             }
@@ -335,14 +343,15 @@ public class PlanFilterService {
 
     public List<tempTestDto> fillToList(List<LocalTime> startTimes, LocalTime useTime, List<tempTestDto> dtos, LocalDate date){
         List<tempTestDto> temp = dtos;
-
         for (LocalTime startTime : startTimes) { // 6 9 12
-            if (!dtos.toString().contains(startTime.toString())){
-                System.out.println("[fillToList] startTime = " + startTime);
+            if (!dtos.toString().contains(startTime.toString())) {
                 String endTime = startTime.plusHours(useTime.getHour()).plusMinutes(useTime.getMinute()).toString();
-                System.out.println("[fillToList] endTime = " + endTime);
-                temp.add(new tempTestDto(date, startTime + "~" + endTime));
-             }
+                if (!LocalDateTime.of(date,startTime).isBefore(LocalDateTime.now())) {
+                    temp.add(new tempTestDto(date, startTime + "~" + endTime));
+                }
+
+            }
+
         }
 
         return temp;

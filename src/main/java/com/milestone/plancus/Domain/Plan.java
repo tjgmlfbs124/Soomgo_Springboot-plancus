@@ -73,7 +73,7 @@ public class Plan {
                 "\"id\":\"" + id + "\"" +
                 ", \"title\":\"" + title + "\"" +
                 ", \"color\":\"" + color + "\"" +
-                ", \"map\":\"" + map.toDto() + "\""+
+                ", \"map\":\"" + map + "\""+
                 ", \"host\":" + host.toJson()  + "\""+
                 ", \"member\":" + member.toJson()  + "\""+
                 ", \"todoList\":" + todoList  + "\""+
@@ -89,7 +89,7 @@ public class Plan {
                 "\"id\":\"" + id + "\"" +
                 ", \"title\":\"" + title + "\"" +
                 ", \"color\":\"" + color + "\"" +
-                ", \"map\":" + map.toDto() +
+                ", \"map\":" + map +
                 ", \"host\":" + host  +
                 ", \"member\":" + member +
                 ", \"todoList\":" + todoList  +

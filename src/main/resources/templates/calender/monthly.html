@@ -209,7 +209,6 @@
 
         if ( today.yyyymmdd() == itemStartDate.yyyymmdd() ) {
           $("#today-plan-empty").hide();
-          item.todoList.forEach((todo, i) => {
               $("#external-events").append(
                 "<div class=\"external-event " + item.color + "\" data-class=\"" + item.color + "\" style=\"position:relative;\" style=\"cursor:pointer;\" onclick=\"location.href='/todo/detail?id=" + item.id +"'\">"+
                 // "<div class=\"external-event " + item.color + "\" data-class=\"" + item.color + "\" style=\"position:relative;\" style=\"cursor:pointer;\">"+
@@ -218,7 +217,6 @@
                     "<span class=\"external-event__title\" style=\"line-height:2; position:absolute; right:8px;\">" + " ~ " + itemEndDate.yyyymmdd()+ " " + itemEndDate.hhMM() +"</span>"+
                 "</div>"
               )
-          });
         }
 
         mc.events.push({
